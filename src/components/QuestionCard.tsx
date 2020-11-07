@@ -1,15 +1,16 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
+import {AnswerObject} from "../App";
 
 type Props = {
     question: string;
     answers: string[];
-    callback: any;
-    userAnswer: any;
+    callback: (evt: React.MouseEvent<HTMLButtonElement>) => void;
+    userAnswer: AnswerObject | undefined;
     questionNumber: number;
     totalQuestions: number;
 }
 
-const QuestioCard:FC<Props> = ({
+const QuestionCard:FC<Props> = ({
     question,
     answers,
     callback,
@@ -24,16 +25,18 @@ const QuestioCard:FC<Props> = ({
             </p>
             <p dangerouslySetInnerHTML={{__html: question}} />
             <div>
-                {answers .map(answer => (
-                    <div>
-                        <button disabled={userAnswer}>
-                            <span dangerouslySetInnerHTML={{__html: answer}}></span>
+                {
+                  answers.map(answer => (
+                    <div key={answer}>
+                        <button disabled={!!userAnswer} value={answer} onClick={callback}>
+                            <span dangerouslySetInnerHTML={{__html: answer}} />
                         </button>
                     </div>
-                ))}
+                  ))
+                }
             </div>
         </div>
     );
 };
 
-export default QuestioCard;
+export default QuestionCard;
