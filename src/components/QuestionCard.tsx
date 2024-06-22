@@ -33,15 +33,15 @@ const AnswerButton: React.FC<{
 };
 
 const QuestionCard: React.FC<Props> = ({
-                                           question,
-                                           answers,
-                                           callback,
-                                           userAnswer,
-                                           questionNr,
-                                           totalQuestions,
-                                       }) => (
+    question,
+    answers,
+    callback,
+    userAnswer,
+    questionNr,
+    totalQuestions,
+}) => (
     <Wrapper>
-        <p className='number'>
+        <p className="number">
             Question: {questionNr} / {totalQuestions}
         </p>
         <p dangerouslySetInnerHTML={{ __html: question }} />

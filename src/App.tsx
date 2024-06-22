@@ -21,7 +21,7 @@ const createAnswerObject = (
     question: string,
     answer: string,
     correct: boolean,
-    correctAnswer: string
+    correctAnswer: string,
 ): AnswerObject => ({
     question,
     answer,
@@ -41,10 +41,7 @@ const App: React.FC = () => {
         setLoading(true);
         setGameOver(false);
 
-        const newQuestions = await fetchQuizQuestions(
-            TOTAL_QUESTIONS,
-            Difficulty.EASY
-        );
+        const newQuestions = await fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
 
         setQuestions(newQuestions);
         setScore(INITIAL_SCORE);
@@ -58,16 +55,16 @@ const App: React.FC = () => {
             const answer = e.currentTarget.value;
             const correct = questions[currentQuestionNumber].correct_answer === answer;
 
-            if (correct) setScore(prevScore => prevScore + 1);
+            if (correct) setScore((prevScore) => prevScore + 1);
 
             const answerObject = createAnswerObject(
                 questions[currentQuestionNumber].question,
                 answer,
                 correct,
-                questions[currentQuestionNumber].correct_answer
+                questions[currentQuestionNumber].correct_answer,
             );
 
-            setUserAnswers(prevAnswers => [...prevAnswers, answerObject]);
+            setUserAnswers((prevAnswers) => [...prevAnswers, answerObject]);
         }
     };
 
@@ -86,11 +83,11 @@ const App: React.FC = () => {
             <Wrapper>
                 <h1>REACT QUIZ</h1>
                 {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-                    <button className='start' onClick={startTrivia}>
+                    <button className="start" onClick={startTrivia}>
                         Start
                     </button>
                 ) : null}
-                {!gameOver && <p className='score'>Score: {score}</p>}
+                {!gameOver && <p className="score">Score: {score}</p>}
                 {loading && <p>Loading Questions...</p>}
                 {!loading && !gameOver && (
                     <QuestionCard
@@ -102,11 +99,14 @@ const App: React.FC = () => {
                         callback={checkAnswer}
                     />
                 )}
-                {!gameOver && !loading && userAnswers.length === currentQuestionNumber + 1 && currentQuestionNumber !== TOTAL_QUESTIONS - 1 && (
-                    <button className='next' onClick={nextQuestion}>
-                        Next Question
-                    </button>
-                )}
+                {!gameOver &&
+                    !loading &&
+                    userAnswers.length === currentQuestionNumber + 1 &&
+                    currentQuestionNumber !== TOTAL_QUESTIONS - 1 && (
+                        <button className="next" onClick={nextQuestion}>
+                            Next Question
+                        </button>
+                    )}
             </Wrapper>
         </>
     );
