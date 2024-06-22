@@ -1,8 +1,8 @@
 import React from 'react';
 // Types
-import {AnswerObject} from '../App';
+import { AnswerObject } from '../App';
 // Styles
-import {ButtonWrapper, Wrapper} from './QuestionCard.styles';
+import { ButtonWrapper, Wrapper } from './QuestionCard.styles';
 
 type Props = {
     question: string;
@@ -11,6 +11,25 @@ type Props = {
     userAnswer: AnswerObject | undefined;
     questionNr: number;
     totalQuestions: number;
+};
+
+const AnswerButton: React.FC<{
+    answer: string;
+    userAnswer: AnswerObject | undefined;
+    callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}> = ({ answer, userAnswer, callback }) => {
+    const isDisabled = !!userAnswer;
+    return (
+        <ButtonWrapper
+            key={answer}
+            correct={userAnswer?.correctAnswer === answer}
+            userClicked={userAnswer?.answer === answer}
+        >
+            <button disabled={isDisabled} value={answer} onClick={callback}>
+                <span dangerouslySetInnerHTML={{ __html: answer }} />
+            </button>
+        </ButtonWrapper>
+    );
 };
 
 const QuestionCard: React.FC<Props> = ({
@@ -25,18 +44,15 @@ const QuestionCard: React.FC<Props> = ({
         <p className='number'>
             Question: {questionNr} / {totalQuestions}
         </p>
-        <p dangerouslySetInnerHTML={{__html: question}}/>
+        <p dangerouslySetInnerHTML={{ __html: question }} />
         <div>
             {answers.map((answer) => (
-                <ButtonWrapper
+                <AnswerButton
                     key={answer}
-                    correct={userAnswer?.correctAnswer === answer}
-                    userClicked={userAnswer?.answer === answer}
-                >
-                    <button disabled={!!userAnswer} value={answer} onClick={callback}>
-                        <span dangerouslySetInnerHTML={{__html: answer}}/>
-                    </button>
-                </ButtonWrapper>
+                    answer={answer}
+                    userAnswer={userAnswer}
+                    callback={callback}
+                />
             ))}
         </div>
     </Wrapper>
