@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 // types
-import { Difficulty, fetchQuizQuestions, QuestionsState } from './api.ts';
+import { Difficulty, fetchQuizQuestions, QuestionsState } from '../api.ts';
 // Components
-import QuestionCard from './components/QuestionCard';
+import QuestionCard from './QuestionCard.tsx';
 // Styles
-import { GlobalStyle, Wrapper } from './App.styles';
+import { GlobalStyle, Wrapper } from './App.styles.ts';
 
 export type AnswerObject = {
     question: string;
