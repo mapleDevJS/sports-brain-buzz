@@ -1,10 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import { createRoot } from 'react-dom/client';
+import App from './components/App.tsx';
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-);
+const ROOT_ELEMENT_ID = 'root';
+const rootElement = document.getElementById(ROOT_ELEMENT_ID);
+
+if (rootElement) {
+    const root = createRoot(rootElement);
+    root.render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>,
+    );
+} else {
+    console.error(`Element with ID '${ROOT_ELEMENT_ID}' not found.`);
+}
