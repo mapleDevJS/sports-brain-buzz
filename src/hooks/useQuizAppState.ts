@@ -1,5 +1,4 @@
 import React, { useCallback, useReducer } from 'react';
-import { fetchQuizQuestions } from '../api';
 import { createAnswerObject } from '../helpers/createAnswerObject';
 import { AnswerObject } from '../types/answer-object.type';
 import {
@@ -10,6 +9,8 @@ import {
 import { ActionType, ActionTypes } from '../types/action-type.type.ts';
 import { Difficulty } from '../types/difficulty.enum.ts';
 import { QuestionsState } from '../types/question-state.type.ts';
+import quizService from '../api/quiz-service.ts';
+import apiService from '../api/api-service.ts';
 
 type InitialState = {
     loading: boolean;
@@ -112,7 +113,11 @@ export const useQuizAppState = () => {
     const startTrivia = useCallback(async () => {
         dispatch({ type: ActionTypes.START_QUIZ });
         try {
-            const newQuestions = await fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.MEDIUM);
+            const newQuestions = await quizService.fetchQuizQuestions(
+                TOTAL_QUESTIONS,
+                Difficulty.MEDIUM,
+                apiService,
+            );
             dispatch({ type: ActionTypes.SET_QUESTIONS, payload: newQuestions });
         } catch (error) {
             dispatch({
