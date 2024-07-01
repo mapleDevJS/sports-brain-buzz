@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer } from 'react';
-import { Difficulty, fetchQuizQuestions, QuestionsState } from '../api';
+import { fetchQuizQuestions } from '../api';
 import { createAnswerObject } from '../helpers/createAnswerObject';
 import { AnswerObject } from '../types/answer-object.type';
 import {
@@ -8,6 +8,8 @@ import {
     TOTAL_QUESTIONS
 } from '../constants/app.constants';
 import { ActionType, ActionTypes } from '../types/action-type.type.ts';
+import { Difficulty } from '../types/difficulty.enum.ts';
+import { QuestionsState } from '../types/question-state.type.ts';
 
 type InitialState = {
     loading: boolean;

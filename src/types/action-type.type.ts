@@ -1,4 +1,4 @@
-import { QuestionsState } from '../api.ts';
+import { QuestionsState } from './question-state.type.ts';
 
 // Define action types as constants
 export const ActionTypes = {
