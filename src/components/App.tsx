@@ -11,7 +11,7 @@ const App: React.FC = () => {
         <>
             <GlobalStyle />
             <Wrapper>
-                <h1>REACT QUIZ</h1>
+                <h1>SPORTS BRAIN BUZZ</h1>
                 {(state.gameOver || state.userAnswers.length === TOTAL_QUESTIONS) && (
                     <button className="start" onClick={startTrivia}>
                         Start
