@@ -30,7 +30,11 @@ const App: React.FC = () => {
                                 totalQuestions={TOTAL_QUESTIONS}
                                 question={state.questions[state.currentQuestionNumber].question}
                                 answers={state.questions[state.currentQuestionNumber].answers}
-                                userAnswer={state.userAnswers ? state.userAnswers[state.currentQuestionNumber] : undefined}
+                                userAnswer={
+                                    state.userAnswers
+                                        ? state.userAnswers[state.currentQuestionNumber]
+                                        : undefined
+                                }
                                 onAnswerSelected={checkAnswer}
                             />
                         </Suspense>

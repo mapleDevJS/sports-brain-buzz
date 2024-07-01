@@ -5,7 +5,7 @@ import { AnswerObject } from '../types/answer-object.type';
 import {
     INITIAL_QUESTION_NUMBER,
     INITIAL_SCORE,
-    TOTAL_QUESTIONS
+    TOTAL_QUESTIONS,
 } from '../constants/app.constants';
 import { ActionType, ActionTypes } from '../types/action-type.type.ts';
 import { Difficulty } from '../types/difficulty.enum.ts';
@@ -42,7 +42,10 @@ const startQuiz = (state: InitialState): InitialState => ({
     score: INITIAL_SCORE,
 });
 
-const setQuestions = (state: InitialState, action: { type: typeof ActionTypes.SET_QUESTIONS; payload: QuestionsState[] }): InitialState => ({
+const setQuestions = (
+    state: InitialState,
+    action: { type: typeof ActionTypes.SET_QUESTIONS; payload: QuestionsState[] },
+): InitialState => ({
     ...state,
     loading: false,
     questions: action.payload,
@@ -57,7 +60,13 @@ const nextQuestion = (state: InitialState): InitialState => {
     };
 };
 
-const checkAnswer = (state: InitialState, action: { type: typeof ActionTypes.CHECK_ANSWER; payload: { answer: string, correctAnswer: string, question: string } }): InitialState => {
+const checkAnswer = (
+    state: InitialState,
+    action: {
+        type: typeof ActionTypes.CHECK_ANSWER;
+        payload: { answer: string; correctAnswer: string; question: string };
+    },
+): InitialState => {
     const { answer, correctAnswer, question } = action.payload;
     const correct = correctAnswer === answer;
     return {
@@ -65,12 +74,15 @@ const checkAnswer = (state: InitialState, action: { type: typeof ActionTypes.CHE
         score: correct ? state.score + 1 : state.score,
         userAnswers: [
             ...state.userAnswers,
-            createAnswerObject(question, answer, correct, correctAnswer)
+            createAnswerObject(question, answer, correct, correctAnswer),
         ],
     };
 };
 
-const setError = (state: InitialState, action: { type: typeof ActionTypes.SET_ERROR; payload: string }): InitialState => ({
+const setError = (
+    state: InitialState,
+    action: { type: typeof ActionTypes.SET_ERROR; payload: string },
+): InitialState => ({
     ...state,
     loading: false,
     gameOver: true,
@@ -103,23 +115,29 @@ export const useQuizAppState = () => {
             const newQuestions = await fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.MEDIUM);
             dispatch({ type: ActionTypes.SET_QUESTIONS, payload: newQuestions });
         } catch (error) {
-            dispatch({ type: ActionTypes.SET_ERROR, payload: 'Failed to fetch quiz questions. Please try again.' });
+            dispatch({
+                type: ActionTypes.SET_ERROR,
+                payload: 'Failed to fetch quiz questions. Please try again.',
+            });
         }
     }, []);
 
-    const checkAnswer = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-        if (state.gameOver) return;
-        const answer = e.currentTarget.value;
-        const currentQuestion = state.questions[state.currentQuestionNumber];
-        dispatch({
-            type: ActionTypes.CHECK_ANSWER,
-            payload: {
-                answer,
-                correctAnswer: currentQuestion.correct_answer,
-                question: currentQuestion.question
-            }
-        });
-    }, [state]);
+    const checkAnswer = useCallback(
+        (e: React.MouseEvent<HTMLButtonElement>) => {
+            if (state.gameOver) return;
+            const answer = e.currentTarget.value;
+            const currentQuestion = state.questions[state.currentQuestionNumber];
+            dispatch({
+                type: ActionTypes.CHECK_ANSWER,
+                payload: {
+                    answer,
+                    correctAnswer: currentQuestion.correct_answer,
+                    question: currentQuestion.question,
+                },
+            });
+        },
+        [state],
+    );
 
     const nextQuestion = useCallback(() => {
         dispatch({ type: ActionTypes.NEXT_QUESTION });

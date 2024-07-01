@@ -47,43 +47,44 @@ export const GlobalStyle = createGlobalStyle`
 
 // Wrapper component styles
 export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  > p {
-    color: ${theme.colors.white};
-  }
+    > p {
+        color: ${theme.colors.white};
+    }
 
-  .score {
-    color: ${theme.colors.white};
-    font-size: ${theme.dimensions.fontSizeScore};
-    margin: 0;
-  }
+    .score {
+        color: ${theme.colors.white};
+        font-size: ${theme.dimensions.fontSizeScore};
+        margin: 0;
+    }
 
-  h1 {
-    font-family: ${theme.fontFamily.fascinate};
-    background-image: ${theme.colors.gradient};
-    background-size: 100%;
-    background-clip: text;
-    filter: ${theme.colors.shadow};
-    font-size: ${theme.dimensions.fontSizeH1};
-    text-align: center;
-    margin: ${theme.dimensions.marginNormal};
-  }
+    h1 {
+        font-family: ${theme.fontFamily.fascinate};
+        background-image: ${theme.colors.gradient};
+        background-size: 100%;
+        background-clip: text;
+        filter: ${theme.colors.shadow};
+        font-size: ${theme.dimensions.fontSizeH1};
+        text-align: center;
+        margin: ${theme.dimensions.marginNormal};
+    }
 
-  .start, .next {
-    cursor: pointer;
-    background: ${theme.colors.buttonGradient};
-    border: 2px solid ${theme.colors.border};
-    box-shadow: ${theme.dimensions.boxShadow};
-    border-radius: ${theme.dimensions.borderRadius};
-    height: ${theme.dimensions.buttonHeight};
-    margin: ${theme.dimensions.marginNormal} 0;
-    padding: ${theme.dimensions.buttonPadding};
-  }
+    .start,
+    .next {
+        cursor: pointer;
+        background: ${theme.colors.buttonGradient};
+        border: 2px solid ${theme.colors.border};
+        box-shadow: ${theme.dimensions.boxShadow};
+        border-radius: ${theme.dimensions.borderRadius};
+        height: ${theme.dimensions.buttonHeight};
+        margin: ${theme.dimensions.marginNormal} 0;
+        padding: ${theme.dimensions.buttonPadding};
+    }
 
-  .start {
-    max-width: ${theme.dimensions.maxButtonWidth};
-  }
+    .start {
+        max-width: ${theme.dimensions.maxButtonWidth};
+    }
 `;

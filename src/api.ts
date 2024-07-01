@@ -10,7 +10,10 @@ const createQuestionState = (question: Question): QuestionsState => ({
 });
 
 // Centralized API fetching implementation
-const fetchQuestionsFromAPI = async (amount: number, difficulty: Difficulty): Promise<Question[]> => {
+const fetchQuestionsFromAPI = async (
+    amount: number,
+    difficulty: Difficulty,
+): Promise<Question[]> => {
     const endpoint = `https://opentdb.com/api.php?amount=${amount}&category=21&difficulty=${difficulty}&type=multiple`;
     const response = await fetch(endpoint);
 
@@ -23,7 +26,10 @@ const fetchQuestionsFromAPI = async (amount: number, difficulty: Difficulty): Pr
 };
 
 // Main function to fetch quiz questions and return the processed state
-export const fetchQuizQuestions = async (amount: number, difficulty: Difficulty): Promise<QuestionsState[]> => {
+export const fetchQuizQuestions = async (
+    amount: number,
+    difficulty: Difficulty,
+): Promise<QuestionsState[]> => {
     const questions = await fetchQuestionsFromAPI(amount, difficulty);
     return questions.map(createQuestionState);
 };
