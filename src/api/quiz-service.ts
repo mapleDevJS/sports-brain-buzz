@@ -1,6 +1,6 @@
 import { Difficulty } from '../types/difficulty.enum';
 import { Question } from '../types/question.type';
-import { QuestionsState } from '../types/question-state.type';
+import { QuestionsState } from '../store/question-state.type.ts';
 import { shuffleArray } from '../helpers/shuffleArray';
 import { handleFetchError } from '../helpers/errorHandler';
 import { ApiServiceInterface } from './api-service.interface.ts';

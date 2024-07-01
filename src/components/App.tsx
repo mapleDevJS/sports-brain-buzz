@@ -1,29 +1,40 @@
 import React, { lazy, Suspense } from 'react';
-import { GlobalStyle, Wrapper } from './App.styles.ts';
-import { useQuizAppState } from '../hooks/useQuizAppState.ts';
-import { TOTAL_QUESTIONS } from '../constants/app.constants.ts';
-const QuestionCard = lazy(() => import('./QuestionCard.tsx'));
+import { GlobalStyle, Wrapper } from './App.styles';
+import { useQuizAppState } from '../hooks/useQuizAppState';
+import { TOTAL_QUESTIONS } from '../constants/app.constants';
+import StartButton from './StartButton';
+import NextButton from './NextButton';
+import Score from './Score';
+import Loading from './Loading';
+import ErrorMessage from './ErrorMessage';
+
+const QuestionCard = lazy(() => import('./QuestionCard'));
 
 const App: React.FC = () => {
     const { state, startTrivia, checkAnswer, nextQuestion } = useQuizAppState();
+
+    const shouldShowStartButton = (): boolean =>
+        state.gameOver || state.userAnswers.length === TOTAL_QUESTIONS;
+    const shouldShowQuestionCard = (): boolean =>
+        !state.loading && !state.gameOver && state.questions.length > 0;
+    const shouldShowNextButton = (): boolean =>
+        !state.gameOver &&
+        !state.loading &&
+        state.userAnswers.length === state.currentQuestionNumber + 1 &&
+        state.currentQuestionNumber !== TOTAL_QUESTIONS - 1;
 
     return (
         <>
             <GlobalStyle />
             <Wrapper>
                 <h1>SPORTS BRAIN BUZZ</h1>
-                {(state.gameOver || state.userAnswers.length === TOTAL_QUESTIONS) && (
-                    <button className="start" onClick={startTrivia}>
-                        Start
-                    </button>
-                )}
-                {!state.gameOver && <p className="score">Score: {state.score}</p>}
+                {shouldShowStartButton() && <StartButton onClick={startTrivia} />}
+                {!state.gameOver && <Score score={state.score} />}
+
                 {state.loading ? (
-                    <p>Loading Questions...</p>
+                    <Loading />
                 ) : (
-                    !state.loading &&
-                    !state.gameOver &&
-                    state.questions.length > 0 && (
+                    shouldShowQuestionCard() && (
                         <Suspense fallback={<p>Loading...</p>}>
                             <QuestionCard
                                 questionNr={state.currentQuestionNumber + 1}
@@ -31,24 +42,16 @@ const App: React.FC = () => {
                                 question={state.questions[state.currentQuestionNumber].question}
                                 answers={state.questions[state.currentQuestionNumber].answers}
                                 userAnswer={
-                                    state.userAnswers
-                                        ? state.userAnswers[state.currentQuestionNumber]
-                                        : undefined
+                                    state.userAnswers[state.currentQuestionNumber] || undefined
                                 }
                                 onAnswerSelected={checkAnswer}
                             />
                         </Suspense>
                     )
                 )}
-                {!state.gameOver &&
-                    !state.loading &&
-                    state.userAnswers.length === state.currentQuestionNumber + 1 &&
-                    state.currentQuestionNumber !== TOTAL_QUESTIONS - 1 && (
-                        <button className="next" onClick={nextQuestion}>
-                            Next Question
-                        </button>
-                    )}
-                {state.error && <p className="error">{state.error}</p>}
+
+                {shouldShowNextButton() && <NextButton onClick={nextQuestion} />}
+                {state.error && <ErrorMessage message={state.error} />}
             </Wrapper>
         </>
     );
