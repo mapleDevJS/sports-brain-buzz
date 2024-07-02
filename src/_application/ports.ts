@@ -3,9 +3,13 @@ import { Question } from '../_domain/question.type.ts';
 import { ResponseCode } from '../types/response-code.enum.ts';
 import { HttpResponse } from '../types/http-response.interface.ts';
 
-export type QuestionRdo = { response_code: ResponseCode; results: Question[] };
-export type TokenRdo = { response_code: ResponseCode; response_message: string; token: string };
-export type ResetTokenRdo = { response_code: ResponseCode; token: string };
+export interface ResponseRdo {
+    response_code: ResponseCode;
+}
+
+export type QuestionRdo = ResponseRdo & { results: Question[] };
+export type TokenRdo = ResponseRdo & { response_message: string; token: string };
+export type ResetTokenRdo = ResponseRdo & { token: string };
 
 export interface QuizApiService {
     fetchQuestions(
