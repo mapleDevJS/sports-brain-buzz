@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import { quizApiService } from '../_services/quiz-api.service.ts';
 import { ActionType } from '../store/action-type.type.ts';
-import { constructErrorMessage } from '../_lib/error-messages.ts';
+import { getFetchTokenErrorMessage } from '../_lib/get-fetch-token-error-messages.ts';
 import { ActionTypes } from '../store/action-types.enum.ts';
 
 export const fetchToken = async (dispatch: Dispatch<ActionType>): Promise<string | null> => {
@@ -14,7 +14,7 @@ export const fetchToken = async (dispatch: Dispatch<ActionType>): Promise<string
     } catch (error) {
         dispatch({
             type: ActionTypes.SET_ERROR,
-            payload: `${constructErrorMessage()} Please try again.`,
+            payload: `${getFetchTokenErrorMessage()} Please try again.`,
         });
         return null;
     }
