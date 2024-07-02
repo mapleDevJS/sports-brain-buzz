@@ -1,12 +1,13 @@
-import { ActionType, ActionTypes } from './action-type.type.ts';
+import { ActionType } from './action-type.type.ts';
 import {
     INITIAL_QUESTION_NUMBER,
     INITIAL_SCORE,
     TOTAL_QUESTIONS,
 } from '../constants/app.constants.ts';
 import { QuestionsState } from './question-state.type.ts';
-import { createAnswerObject } from '../helpers/createAnswerObject.ts';
+import { createAnswer } from '../_lib/createAnswer.ts';
 import { InitialState } from './initial-state.type.ts';
+import { ActionTypes } from './action-types.enum.ts';
 
 const startQuiz = (state: InitialState): InitialState => ({
     ...state,
@@ -49,10 +50,7 @@ const checkAnswer = (
     return {
         ...state,
         score: correct ? state.score + 1 : state.score,
-        userAnswers: [
-            ...state.userAnswers,
-            createAnswerObject(question, answer, correct, correctAnswer),
-        ],
+        userAnswers: [...state.userAnswers, createAnswer(question, answer, correct, correctAnswer)],
     };
 };
 
@@ -64,6 +62,14 @@ const setError = (
     loading: false,
     gameOver: true,
     error: action.payload,
+});
+
+const setToken = (
+    state: InitialState,
+    action: { type: typeof ActionTypes.SET_TOKEN; payload: string },
+): InitialState => ({
+    ...state,
+    token: action.payload,
 });
 
 export const quizReducer = (state: InitialState, action: ActionType): InitialState => {
@@ -78,6 +84,8 @@ export const quizReducer = (state: InitialState, action: ActionType): InitialSta
             return checkAnswer(state, action);
         case ActionTypes.SET_ERROR:
             return setError(state, action);
+        case ActionTypes.SET_TOKEN:
+            return setToken(state, action);
         default:
             return state;
     }
