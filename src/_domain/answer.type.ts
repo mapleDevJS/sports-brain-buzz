@@ -1,4 +1,4 @@
-export type AnswerObject = {
+export type Answer = {
     question: string;
     answer: string;
     correct: boolean;

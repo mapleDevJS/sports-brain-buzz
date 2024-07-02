@@ -1,11 +1,11 @@
-import { AnswerObject } from '../types/answer-object.type.ts';
+import { Answer } from '../_domain/answer.type.ts';
 
-export const createAnswerObject = (
+export const createAnswer = (
     question: string,
     answer: string,
     correct: boolean,
     correctAnswer: string,
-): AnswerObject => ({
+): Answer => ({
     question,
     answer,
     correct,

@@ -1,14 +1,14 @@
 import React from 'react';
-import { AnswerObject } from '../types/answer-object.type.ts';
+import { Answer } from '../_domain/answer.type.ts';
 import { ButtonWrapper } from './QuestionCard.styles.ts';
 
 type Props = {
     answer: string;
-    userAnswer: AnswerObject | undefined;
+    userAnswer: Answer | undefined;
     onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const isButtonDisabled = (userAnswer: AnswerObject | undefined): boolean => !!userAnswer;
+const isButtonDisabled = (userAnswer: Answer | undefined): boolean => !!userAnswer;
 
 export const AnswerButton: React.FC<Props> = ({ answer, userAnswer, onClick }) => {
     const { correctAnswer, answer: userClickedAnswer } = userAnswer || {};

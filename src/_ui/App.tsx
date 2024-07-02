@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { GlobalStyle, Wrapper } from './App.styles';
-import { useQuizAppState } from '../hooks/useQuizAppState';
+import { useQuizAppState } from '../_application/useQuizAppState.ts';
 import { TOTAL_QUESTIONS } from '../constants/app.constants';
 import StartButton from './StartButton';
 import NextButton from './NextButton';

@@ -1,6 +1,6 @@
 import React from 'react';
 // Types
-import { AnswerObject } from '../types/answer-object.type.ts';
+import { Answer } from '../_domain/answer.type.ts';
 // Styles
 import { Wrapper } from './QuestionCard.styles';
 import { AnswerButton } from './AnswerButton.tsx';
@@ -11,7 +11,7 @@ type Props = {
     question: string;
     answers: string[];
     onAnswerSelected: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    userAnswer: AnswerObject | undefined;
+    userAnswer: Answer | undefined;
     questionNr: number;
     totalQuestions: number;
 };
