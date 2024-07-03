@@ -3,8 +3,8 @@ import { INITIAL_QUESTION_NUMBER, INITIAL_SCORE } from '../constants/app.constan
 import { ActionTypes } from '../store/action-types.enum';
 import { quizReducer } from '../store/quiz-reducer';
 import { InitialState } from '../store/initial-state.type';
-import { fetchToken } from './fetchToken.ts';
 import { fetchQuestions } from './fetchQuestions.ts';
+import { getToken } from './getToken.ts';
 
 // Initial state for the quiz app
 const initialState: InitialState = {
@@ -23,7 +23,7 @@ export const useQuizAppState = () => {
 
     const startTrivia = useCallback(async () => {
         dispatch({ type: ActionTypes.START_QUIZ });
-        const token = state.token || (await fetchToken(dispatch));
+        const token = state.token || (await getToken(dispatch));
         if (token) await fetchQuestions(token, dispatch);
     }, [state.token]);
 

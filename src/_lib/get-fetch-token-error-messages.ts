@@ -2,7 +2,7 @@ import { ResponseCode } from '../types/response-code.enum.ts';
 
 const ERROR_MESSAGE_BASE = 'Failed to fetch quiz token.';
 
-export const constructErrorMessage = (responseCode?: ResponseCode): string => {
+export const getFetchTokenErrorMessage = (responseCode?: ResponseCode): string => {
     switch (responseCode) {
         case ResponseCode.NoResults:
             return `${ERROR_MESSAGE_BASE} Could not return results. The API doesn't have enough questions for your query.`;
