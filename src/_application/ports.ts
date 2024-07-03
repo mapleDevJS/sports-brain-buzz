@@ -34,3 +34,12 @@ export interface HttpService {
     put<T, U>(url: string, data: U): Promise<HttpResponse<T>>;
     delete<T>(url: string): Promise<HttpResponse<T>>;
 }
+
+export interface StorageService {
+    getItem(key: string): string | null;
+    setItem(key: string, value: string): void;
+    removeItem(key: string): void;
+    clear(): void;
+    key(index: number): string | null;
+    length: number;
+}
