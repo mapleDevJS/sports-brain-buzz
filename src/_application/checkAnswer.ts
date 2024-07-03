@@ -1,17 +1,19 @@
 import { MouseEvent } from 'react';
-import { useQuizStorage } from '../_services/storageAdapter.ts';
+import { QuizStorageService } from './ports.ts';
 
-export const useCheckAnswer = () => {
-    const { state, checkAnswer: checkAnswerStorage } = useQuizStorage();
+type Dependencies = {
+    quizStorage: QuizStorageService;
+};
 
-    const checkAnswer = (evt: MouseEvent<HTMLButtonElement>) => {
-        if (state.gameOver) return;
+export const checkAnswer = (evt: MouseEvent<HTMLButtonElement>, dependencies: Dependencies) => {
+    const { quizStorage } = dependencies;
+    const { state, checkAnswer: checkAnswerStorage } = quizStorage;
 
-        const answer = evt.currentTarget.value;
+    if (state.gameOver) return;
 
-        const currentQuestion = state.questions[state.currentQuestionNumber];
+    const answer = evt.currentTarget.value;
 
-        checkAnswerStorage(answer, currentQuestion.correct_answer, currentQuestion.question);
-    };
-    return { checkAnswer };
+    const currentQuestion = state.questions[state.currentQuestionNumber];
+
+    checkAnswerStorage(answer, currentQuestion.correct_answer, currentQuestion.question);
 };

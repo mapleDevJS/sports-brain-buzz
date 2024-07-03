@@ -1,10 +1,12 @@
-import { useQuizStorage } from '../_services/storageAdapter.ts';
+import { QuizStorageService } from './ports.ts';
 
-export const useNextQuestion = () => {
-    const { nextQuestion: nextQuestion2 } = useQuizStorage();
+type Dependencies = {
+    quizStorage: QuizStorageService;
+};
 
-    const nextQuestion = () => {
-        nextQuestion2();
-    };
-    return { nextQuestion };
+export const nextQuestion = (dependencies: Dependencies) => {
+    const { quizStorage } = dependencies;
+    const { nextQuestion: nextQuestion2 } = quizStorage;
+
+    nextQuestion2();
 };
