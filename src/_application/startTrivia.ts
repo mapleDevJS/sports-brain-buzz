@@ -1,19 +1,21 @@
-import { Dispatch } from 'react';
-import { ActionTypes } from '../_services/store/action-types.enum.ts';
-import { storageService } from '../_services/storageAdapter.ts';
 import { fetchToken } from './fetchToken.ts';
 import { fetchQuestions } from './fetchQuestions.ts';
-import { ActionType } from '../_services/store/action-type.type.ts';
+import { localStorage, useQuizStorage } from '../_services/storageAdapter.ts';
 
-export const startTrivia = async (dispatch: Dispatch<ActionType>) => {
-    dispatch({ type: ActionTypes.START_QUIZ });
-    const token = storageService.getItem('sessionToken');
+export const useStartTrivia = () => {
+    const { startQuiz, setToken, setError, setFetchTokenError, setQuestions } = useQuizStorage();
 
-    if (!token) {
-        await fetchToken(dispatch);
-    }
-    const existingToken = storageService.getItem('sessionToken');
-    if (existingToken) {
-        await fetchQuestions(existingToken, dispatch);
-    }
+    const startTrivia = async () => {
+        startQuiz();
+        const token = localStorage.getItem('sessionToken');
+
+        if (!token) {
+            await fetchToken(setToken, setFetchTokenError);
+        }
+        const existingToken = localStorage.getItem('sessionToken');
+        if (existingToken) {
+            await fetchQuestions(existingToken, setError, startQuiz, setQuestions);
+        }
+    };
+    return { startTrivia };
 };

@@ -3,6 +3,10 @@ import { Question } from '../_domain/question.type.ts';
 import { ResponseCode } from '../types/response-code.enum.ts';
 import { HttpResponse } from '../types/http-response.interface.ts';
 import { TokenKey } from '../types/token-key.type.ts';
+import { InitialState } from '../_services/types/initial-state.type.ts';
+import { QuestionsState } from '../_services/types/question-state.type.ts';
+// import { Dispatch } from 'react';
+// import { ActionType } from '../_services/types/action-type.type.ts';
 
 export interface ResponseRdo {
     response_code: ResponseCode;
@@ -36,7 +40,18 @@ export interface HttpService {
     delete<T>(url: string): Promise<HttpResponse<T>>;
 }
 
-export interface StorageService {
+export interface QuizStorageService {
+    state: InitialState;
+    startQuiz: () => void;
+    setToken: () => void;
+    setFetchTokenError: () => void;
+    setError: (message: string) => void;
+    setQuestions: (questionState: QuestionsState[]) => void;
+    checkAnswer: (answer: string, correctAnswer: string, question: string) => void;
+    nextQuestion: () => void;
+}
+
+export interface LocalStorageService {
     getItem(key: TokenKey): string | null;
     setItem(key: TokenKey, value: string): void;
     removeItem(key: TokenKey): void;

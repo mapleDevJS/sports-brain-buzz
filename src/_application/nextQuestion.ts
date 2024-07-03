@@ -1,7 +1,10 @@
-import { Dispatch } from 'react';
-import { ActionTypes } from '../_services/store/action-types.enum.ts';
-import { ActionType } from '../_services/store/action-type.type.ts';
+import { useQuizStorage } from '../_services/storageAdapter.ts';
 
-export const nextQuestion = (dispatch: Dispatch<ActionType>) => {
-    dispatch({ type: ActionTypes.NEXT_QUESTION });
+export const useNextQuestion = () => {
+    const { nextQuestion: nextQuestion2 } = useQuizStorage();
+
+    const nextQuestion = () => {
+        nextQuestion2();
+    };
+    return { nextQuestion };
 };

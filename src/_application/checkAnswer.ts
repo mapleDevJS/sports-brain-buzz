@@ -1,25 +1,17 @@
-import { Dispatch, MouseEvent } from 'react';
-import { ActionTypes } from '../_services/store/action-types.enum.ts';
-import { ActionType } from '../_services/store/action-type.type.ts';
-import { InitialState } from '../_services/store/initial-state.type.ts';
+import { MouseEvent } from 'react';
+import { useQuizStorage } from '../_services/storageAdapter.ts';
 
-export const checkAnswer = (
-    evt: MouseEvent<HTMLButtonElement>,
-    dispatch: Dispatch<ActionType>,
-    state: InitialState,
-) => {
-    if (state.gameOver) return;
+export const useCheckAnswer = () => {
+    const { state, checkAnswer: checkAnswerStorage } = useQuizStorage();
 
-    const answer = evt.currentTarget.value;
+    const checkAnswer = (evt: MouseEvent<HTMLButtonElement>) => {
+        if (state.gameOver) return;
 
-    const currentQuestion = state.questions[state.currentQuestionNumber];
+        const answer = evt.currentTarget.value;
 
-    dispatch({
-        type: ActionTypes.CHECK_ANSWER,
-        payload: {
-            answer,
-            correctAnswer: currentQuestion.correct_answer,
-            question: currentQuestion.question,
-        },
-    });
+        const currentQuestion = state.questions[state.currentQuestionNumber];
+
+        checkAnswerStorage(answer, currentQuestion.correct_answer, currentQuestion.question);
+    };
+    return { checkAnswer };
 };
