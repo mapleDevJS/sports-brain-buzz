@@ -6,10 +6,10 @@ import NextButton from './NextButton';
 import Score from './Score';
 import Loading from './Loading';
 import ErrorMessage from './ErrorMessage';
-import { useStartTrivia } from '../_application/startTrivia.ts';
-import { useCheckAnswer } from '../_application/checkAnswer.ts';
-import { useNextQuestion } from '../_application/nextQuestion.ts';
 import { useQuizStorage } from '../_services/storageAdapter.ts';
+import { useStartTrivia } from '../_services/useStartTrivia.ts';
+import { useCheckAnswer } from '../_services/useCheckAnswer.ts';
+import { useNextQuestion } from '../_services/useNextQuestion.ts';
 
 const QuestionCard = lazy(() => import('./QuestionCard'));
 
@@ -19,9 +19,9 @@ const App: React.FC = () => {
     const { gameOver, userAnswers, loading, questions, currentQuestionNumber, score, error } =
         state;
 
-    const { startTrivia } = useStartTrivia();
-    const { checkAnswer } = useCheckAnswer();
-    const { nextQuestion } = useNextQuestion();
+    const startTrivia = useStartTrivia();
+    const checkAnswer = useCheckAnswer();
+    const nextQuestion = useNextQuestion();
 
     const handleStartClick = useCallback(async () => {
         await startTrivia();
