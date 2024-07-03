@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import BGImage from '../images/nattu-adnan-unsplash.jpg';
 
 // Define constants and theme colors together
@@ -24,25 +24,39 @@ const theme = {
         borderRadius: '10px',
         boxShadow: '0 5px 10px rgba(0, 0, 0, 0.25)',
     },
+    breakpoints: {
+        mobile: '600px',
+    },
+    animations: {
+        buttonHover: '0.3s ease-in-out',
+    },
 };
+
+// Keyframes for animations
+const fadeIn = keyframes`
+    from { opacity: 0; }
+    to { opacity: 1; }
+`;
 
 // Global styles
 export const GlobalStyle = createGlobalStyle`
-  html {
-    height: 100%;
-  }
-  body {
-    background-image: url(${BGImage});
-    background-size: cover;
-    margin: 0;
-    padding: 0 20px;
-    display: flex;
-    justify-content: center;
-  }
-  *, *::before, *::after {
-    box-sizing: border-box;
-    font-family: ${theme.fontFamily.catamaran};
-  }
+    html {
+        height: 100%;
+    }
+    body {
+        background-image: url(${BGImage});
+        background-size: cover;
+        margin: 0;
+        padding: 0 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: ${fadeIn} 1s ease-in-out;
+    }
+    *, *::before, *::after {
+        box-sizing: border-box;
+        font-family: ${theme.fontFamily.catamaran};
+    }
 `;
 
 // Wrapper component styles
@@ -50,9 +64,12 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 
     > p {
         color: ${theme.colors.white};
+        max-width: 800px;
+        margin-bottom: ${theme.dimensions.marginNormal};
     }
 
     .score {
@@ -82,6 +99,15 @@ export const Wrapper = styled.div`
         height: ${theme.dimensions.buttonHeight};
         margin: ${theme.dimensions.marginNormal} 0;
         padding: ${theme.dimensions.buttonPadding};
+        transition: transform ${theme.animations.buttonHover};
+
+        &:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: ${theme.breakpoints.mobile}) {
+            width: 100%;
+        }
     }
 
     .start {

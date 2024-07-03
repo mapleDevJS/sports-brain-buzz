@@ -10,4 +10,4 @@ export type ActionType =
           payload: { answer: string; correctAnswer: string; question: string };
       }
     | { type: typeof ActionTypes.SET_ERROR; payload: string }
-    | { type: typeof ActionTypes.SET_TOKEN; payload: string };
+    | { type: typeof ActionTypes.SET_TOKEN };

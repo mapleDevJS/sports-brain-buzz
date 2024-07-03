@@ -2,6 +2,7 @@ import { Difficulty } from '../types/difficulty.enum.ts';
 import { Question } from '../_domain/question.type.ts';
 import { ResponseCode } from '../types/response-code.enum.ts';
 import { HttpResponse } from '../types/http-response.interface.ts';
+import { TokenKey } from '../types/token-key.type.ts';
 
 export interface ResponseRdo {
     response_code: ResponseCode;
@@ -36,9 +37,9 @@ export interface HttpService {
 }
 
 export interface StorageService {
-    getItem(key: string): string | null;
-    setItem(key: string, value: string): void;
-    removeItem(key: string): void;
+    getItem(key: TokenKey): string | null;
+    setItem(key: TokenKey, value: string): void;
+    removeItem(key: TokenKey): void;
     clear(): void;
     key(index: number): string | null;
     length: number;
