@@ -3,9 +3,9 @@ import {
     INITIAL_QUESTION_NUMBER,
     INITIAL_SCORE,
     TOTAL_QUESTIONS,
-} from '../constants/app.constants.ts';
+} from '../../constants/app.constants.ts';
 import { QuestionsState } from './question-state.type.ts';
-import { createAnswer } from '../_lib/createAnswer.ts';
+import { createAnswer } from '../../_lib/createAnswer.ts';
 import { InitialState } from './initial-state.type.ts';
 import { ActionTypes } from './action-types.enum.ts';
 
@@ -64,12 +64,9 @@ const setError = (
     error: action.payload,
 });
 
-const setToken = (
-    state: InitialState,
-    action: { type: typeof ActionTypes.SET_TOKEN; payload: string },
-): InitialState => ({
+const setToken = (state: InitialState): InitialState => ({
     ...state,
-    token: action.payload,
+    loading: false,
 });
 
 export const quizReducer = (state: InitialState, action: ActionType): InitialState => {
@@ -85,7 +82,7 @@ export const quizReducer = (state: InitialState, action: ActionType): InitialSta
         case ActionTypes.SET_ERROR:
             return setError(state, action);
         case ActionTypes.SET_TOKEN:
-            return setToken(state, action);
+            return setToken(state);
         default:
             return state;
     }

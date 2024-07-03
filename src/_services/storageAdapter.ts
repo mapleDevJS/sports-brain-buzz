@@ -1,22 +1,23 @@
 import { StorageService } from '../_application/ports.ts';
+import { TokenKey } from '../types/token-key.type.ts';
 
 export const storageService: StorageService = {
-    getItem: (key: string) => {
-        return sessionStorage.getItem(key);
+    getItem: (key: TokenKey) => {
+        return localStorage.getItem(key);
     },
-    setItem: (key: string, value: string) => {
-        sessionStorage.setItem(key, value);
+    setItem: (key: TokenKey, value: string) => {
+        localStorage.setItem(key, value);
     },
-    removeItem: (key: string) => {
-        sessionStorage.removeItem(key);
+    removeItem: (key: TokenKey) => {
+        localStorage.removeItem(key);
     },
     clear: () => {
-        sessionStorage.clear();
+        localStorage.clear();
     },
     key: (index: number) => {
-        return sessionStorage.key(index);
+        return localStorage.key(index);
     },
     get length() {
-        return sessionStorage.length;
+        return localStorage.length;
     },
 };

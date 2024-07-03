@@ -1,17 +1,50 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, MouseEvent, Suspense, useCallback, useReducer } from 'react';
 import { GlobalStyle, Wrapper } from './App.styles';
-import { useQuizAppState } from '../_application/useQuizAppState.ts';
-import { TOTAL_QUESTIONS } from '../constants/app.constants';
+import {
+    INITIAL_QUESTION_NUMBER,
+    INITIAL_SCORE,
+    TOTAL_QUESTIONS,
+} from '../constants/app.constants';
 import StartButton from './StartButton';
 import NextButton from './NextButton';
 import Score from './Score';
 import Loading from './Loading';
 import ErrorMessage from './ErrorMessage';
+import { quizReducer } from '../_services/store/quiz-reducer.ts';
+import { InitialState } from '../_services/store/initial-state.type.ts';
+import { startTrivia } from '../_application/startTrivia.ts';
+import { checkAnswer } from '../_application/checkAnswer.ts';
+import { nextQuestion } from '../_application/nextQuestion.ts';
 
 const QuestionCard = lazy(() => import('./QuestionCard'));
 
+const initialState: InitialState = {
+    loading: false,
+    questions: [],
+    currentQuestionNumber: INITIAL_QUESTION_NUMBER,
+    userAnswers: [],
+    score: INITIAL_SCORE,
+    gameOver: true,
+    error: null,
+};
+
 const App: React.FC = () => {
-    const { state, startTrivia, checkAnswer, nextQuestion } = useQuizAppState();
+    const [state, dispatch] = useReducer(quizReducer, initialState);
+
+    const handleStartClick = useCallback(async () => {
+        await startTrivia(dispatch);
+    }, []);
+
+    const handleAnswerSelect = useCallback(
+        (evt: MouseEvent<HTMLButtonElement>) => {
+            checkAnswer(evt, dispatch, state);
+        },
+        [state],
+    );
+
+    const handleNextQuestionClick = useCallback(() => {
+        nextQuestion(dispatch);
+    }, []);
 
     const shouldShowStartButton = (): boolean =>
         state.gameOver || state.userAnswers.length === TOTAL_QUESTIONS;
@@ -28,7 +61,7 @@ const App: React.FC = () => {
             <GlobalStyle />
             <Wrapper>
                 <h1>SPORTS BRAIN BUZZ</h1>
-                {shouldShowStartButton() && <StartButton onClick={startTrivia} />}
+                {shouldShowStartButton() && <StartButton onClick={handleStartClick} />}
                 {!state.gameOver && <Score score={state.score} />}
 
                 {state.loading ? (
@@ -44,13 +77,13 @@ const App: React.FC = () => {
                                 userAnswer={
                                     state.userAnswers[state.currentQuestionNumber] || undefined
                                 }
-                                onAnswerSelected={checkAnswer}
+                                onAnswerSelected={handleAnswerSelect}
                             />
                         </Suspense>
                     )
                 )}
 
-                {shouldShowNextButton() && <NextButton onClick={nextQuestion} />}
+                {shouldShowNextButton() && <NextButton onClick={handleNextQuestionClick} />}
                 {state.error && <ErrorMessage message={state.error} />}
             </Wrapper>
         </>
