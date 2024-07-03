@@ -1,23 +1,11 @@
-import { StorageService } from '../_application/ports.ts';
-import { TokenKey } from '../types/token-key.type.ts';
+import { LocalStorageService, QuizStorageService } from '../_application/ports.ts';
+import { useStore } from './store.tsx';
+import { localStore } from './local-store.ts';
 
-export const storageService: StorageService = {
-    getItem: (key: TokenKey) => {
-        return localStorage.getItem(key);
-    },
-    setItem: (key: TokenKey, value: string) => {
-        localStorage.setItem(key, value);
-    },
-    removeItem: (key: TokenKey) => {
-        localStorage.removeItem(key);
-    },
-    clear: () => {
-        localStorage.clear();
-    },
-    key: (index: number) => {
-        return localStorage.key(index);
-    },
-    get length() {
-        return localStorage.length;
-    },
+export function useQuizStorage(): QuizStorageService {
+    return useStore();
+}
+
+export const localStorage: LocalStorageService = {
+    ...localStore(),
 };
