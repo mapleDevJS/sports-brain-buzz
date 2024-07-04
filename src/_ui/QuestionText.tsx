@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { createMarkup } from '../_lib/createMarkup.ts';
 
 type QuestionTextProps = {

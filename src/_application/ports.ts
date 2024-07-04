@@ -1,12 +1,8 @@
-import { Difficulty } from '../types/difficulty.enum.ts';
 import { Question } from '../_domain/question.type.ts';
+import { Difficulty } from '../types/difficulty.enum.ts';
+import { InitialState } from '../types/initial-state.type.ts';
+import { QuestionsState } from '../types/question-state.type.ts';
 import { ResponseCode } from '../types/response-code.enum.ts';
-import { HttpResponse } from '../types/http-response.interface.ts';
-import { TokenKey } from '../types/token-key.type.ts';
-import { InitialState } from '../_services/types/initial-state.type.ts';
-import { QuestionsState } from '../_services/types/question-state.type.ts';
-// import { Dispatch } from 'react';
-// import { ActionType } from '../_services/types/action-type.type.ts';
 
 export interface ResponseRdo {
     response_code: ResponseCode;

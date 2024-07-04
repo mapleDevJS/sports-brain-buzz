@@ -1,5 +1,5 @@
-import { Difficulty } from '../types/difficulty.enum.ts';
 import { API_URL, CATEGORY_ID } from '../constants/api.constants.ts';
+import { Difficulty } from '../types/difficulty.enum.ts';
 
 export const getFetchQuestionsUrl = (
     amount: number,

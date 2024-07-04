@@ -1,6 +1,6 @@
-import { fetchToken } from './fetchToken.ts';
+import { localStorage } from '../_services/store/storageAdapter.ts';
 import { fetchQuestions } from './fetchQuestions.ts';
-import { localStorage } from '../_services/storageAdapter.ts';
+import { fetchToken } from './fetchToken.ts';
 import { QuizStorageService } from './ports.ts';
 
 type Dependencies = {

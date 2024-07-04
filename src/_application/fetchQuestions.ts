@@ -1,11 +1,11 @@
+import { createQuestionState } from '../_lib/createQuestionState.ts';
+import { getApiErrorMessage } from '../_lib/get-api-error-messages.ts';
 import { quizApiService } from '../_services/quiz-api.service.ts';
+import { localStorage } from '../_services/store/storageAdapter.ts';
 import { TOTAL_QUESTIONS } from '../constants/app.constants.ts';
 import { Difficulty } from '../types/difficulty.enum.ts';
-import { createQuestionState } from '../_lib/createQuestionState.ts';
+import { QuestionsState } from '../types/question-state.type.ts';
 import { ResponseCode } from '../types/response-code.enum.ts';
-import { localStorage } from '../_services/storageAdapter.ts';
-import { getApiErrorMessage } from '../_lib/get-api-error-messages.ts';
-import { QuestionsState } from '../_services/types/question-state.type.ts';
 
 export const fetchQuestions = async (
     token: string,
@@ -34,6 +34,7 @@ export const fetchQuestions = async (
                 throw new Error(`${getApiErrorMessage(responseCode)}`);
         }
     } catch (error) {
+        console.log(error);
         setError('Failed to fetch quiz questions. Please try again.');
     }
 };

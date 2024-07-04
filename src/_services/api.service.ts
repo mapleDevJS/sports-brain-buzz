@@ -1,5 +1,5 @@
-import { httpService } from './http.service.ts';
 import { ApiService } from '../_application/ports.ts';
+import { httpService } from './http.service.ts';
 
 export const apiService: ApiService = {
     get: <T>(url: string) => httpService.get<T>(url),
