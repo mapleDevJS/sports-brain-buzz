@@ -1,4 +1,3 @@
-import { HttpResponse } from '../types/http-response.interface.ts';
 import { HttpService } from '../_application/ports.ts';
 
 export const httpService: HttpService = {

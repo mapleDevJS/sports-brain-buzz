@@ -1,9 +1,10 @@
 import React from 'react';
+
 // Types
 import { Answer } from '../_domain/answer.type.ts';
+import { AnswerButton } from './AnswerButton.tsx';
 // Styles
 import { Wrapper } from './QuestionCard.styles';
-import { AnswerButton } from './AnswerButton.tsx';
 import { QuestionNumber } from './QuestionNumber.tsx';
 import { QuestionText } from './QuestionText.tsx';
 
@@ -40,4 +41,6 @@ const QuestionCard: React.FC<Props> = ({
     </Wrapper>
 );
 
-export default React.memo(QuestionCard);
+const MemoizedQuestionCard = React.memo(QuestionCard);
+
+export default MemoizedQuestionCard;

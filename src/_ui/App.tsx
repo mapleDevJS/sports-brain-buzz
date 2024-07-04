@@ -1,17 +1,18 @@
 import React, { lazy, MouseEvent, Suspense, useCallback } from 'react';
-import { GlobalStyle, Wrapper } from './App.styles';
-import { TOTAL_QUESTIONS } from '../constants/app.constants';
-import StartButton from './StartButton';
-import NextButton from './NextButton';
-import Score from './Score';
-import Loading from './Loading';
-import ErrorMessage from './ErrorMessage';
-import { useQuizStorage } from '../_services/storageAdapter.ts';
-import { useStartTrivia } from '../_services/useStartTrivia.ts';
+
+import { useQuizStorage } from '../_services/store/storageAdapter.ts';
 import { useCheckAnswer } from '../_services/useCheckAnswer.ts';
 import { useNextQuestion } from '../_services/useNextQuestion.ts';
+import { useStartTrivia } from '../_services/useStartTrivia.ts';
+import { TOTAL_QUESTIONS } from '../constants/app.constants';
+import { GlobalStyle, Wrapper } from './App.styles';
+import ErrorMessage from './ErrorMessage';
+import Loading from './Loading';
+import NextButton from './NextButton';
+import Score from './Score';
+import StartButton from './StartButton';
 
-const QuestionCard = lazy(() => import('./QuestionCard'));
+const MemoizedQuestionCard = lazy(() => import('./QuestionCard'));
 
 const App: React.FC = () => {
     const { state } = useQuizStorage();
@@ -59,7 +60,7 @@ const App: React.FC = () => {
                 ) : (
                     shouldShowQuestionCard() && (
                         <Suspense fallback={<p>Loading...</p>}>
-                            <QuestionCard
+                            <MemoizedQuestionCard
                                 questionNr={currentQuestionNumber + 1}
                                 totalQuestions={TOTAL_QUESTIONS}
                                 question={questions[currentQuestionNumber].question}

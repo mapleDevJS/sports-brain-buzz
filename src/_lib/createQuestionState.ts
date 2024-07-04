@@ -1,6 +1,6 @@
 // Helper function to create question state
 import { Question } from '../_domain/question.type.ts';
-import { QuestionsState } from '../_services/types/question-state.type.ts';
+import { QuestionsState } from '../types/question-state.type.ts';
 import { shuffleArray } from './shuffleArray.ts';
 
 export const createQuestionState = (question: Question): QuestionsState => ({

@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
+
 import BGImage from '../images/nattu-adnan-unsplash.jpg';
 
 // Define constants and theme colors together

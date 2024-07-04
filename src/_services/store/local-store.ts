@@ -1,5 +1,3 @@
-import { TokenKey } from '../types/token-key.type.ts';
-
 export const localStore = () => ({
     getItem: (key: TokenKey) => {
         return localStorage.getItem(key);
