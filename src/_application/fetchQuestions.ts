@@ -4,15 +4,15 @@ import { quizApiService } from '../_services/quiz-api.service.ts';
 import { localStorage } from '../_services/store/storageAdapter.ts';
 import { TOTAL_QUESTIONS } from '../constants/app.constants.ts';
 import { Difficulty } from '../types/difficulty.enum.ts';
-import { QuestionsState } from '../types/question-state.type.ts';
 import { ResponseCode } from '../types/response-code.enum.ts';
+import { QuizStorageService } from './ports.ts';
+import { startTrivia } from './startTrivia.ts';
 
 export const fetchQuestions = async (
     token: string,
-    setError: (message: string) => void,
-    startQuiz: () => void,
-    setQuestions: (questionState: QuestionsState[]) => void,
+    quizStorage: QuizStorageService,
 ): Promise<void> => {
+    const { setError, setQuestions } = quizStorage;
     try {
         const { data } = await quizApiService.fetchQuestions(
             TOTAL_QUESTIONS,
@@ -28,7 +28,7 @@ export const fetchQuestions = async (
             case ResponseCode.Empty:
             case ResponseCode.NotFound:
                 localStorage.removeItem('sessionToken');
-                startQuiz();
+                await startTrivia({ quizStorage });
                 break;
             default:
                 throw new Error(`${getApiErrorMessage(responseCode)}`);
