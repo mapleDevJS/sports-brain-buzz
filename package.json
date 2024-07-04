@@ -1,6 +1,6 @@
 {
     "name": "sports-brain-buzz",
-    "version": "9.2.0",
+    "version": "9.3.0",
     "private": true,
     "type": "module",
     "description": "A web application for sports enthusiasts using React and TypeScript.",
@@ -8,8 +8,14 @@
         "type": "git",
         "url": "https://github.com/mapleDevJS/sports-brain-buzz.git"
     },
+    "keywords": [
+        "sports",
+        "react",
+        "typescript",
+        "web application"
+    ],
     "engines": {
-        "node": "20.15.0"
+        "node": ">=20.15.0"
     },
     "scripts": {
         "dev": "vite",
@@ -18,7 +24,8 @@
         "lint:fix": "eslint . --ext ts,tsx --fix",
         "format": "prettier --write .",
         "preview": "vite preview",
-        "clean": "rimraf dist"
+        "clean": "rimraf dist",
+        "type:check": "tsc --noEmit"
     },
     "dependencies": {
         "react": "^18.3.1",
