@@ -1,7 +1,7 @@
-import { nextQuestion } from '../_application/nextQuestion.ts';
+import { getNextQuestion } from '../_application/getNextQuestion.ts';
 import { useQuizStorage } from './store/storageAdapter.ts';
 
 export const useNextQuestion = () => {
     const quizStorage = useQuizStorage();
-    return () => nextQuestion({ quizStorage });
+    return () => getNextQuestion({ quizStorage });
 };

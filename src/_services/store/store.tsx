@@ -1,6 +1,5 @@
 import { FC, ReactNode, useMemo, useReducer } from 'react';
 
-import { getApiErrorMessage } from '../../_lib/get-api-error-messages.ts';
 import { ActionTypes } from '../../types/action-types.enum.ts';
 import { QuestionsState } from '../../types/question-state.type.ts';
 import { initialState } from './initial-state.ts';
@@ -16,10 +15,10 @@ export const Provider: FC<ProviderProps> = ({ children }) => {
 
     const startQuiz = () => dispatch({ type: ActionTypes.START_QUIZ });
     const setToken = () => dispatch({ type: ActionTypes.SET_TOKEN });
-    const setFetchTokenError = () =>
+    const setFetchTokenError = (payload: string) =>
         dispatch({
             type: ActionTypes.SET_ERROR,
-            payload: `${getApiErrorMessage()} Please try again.`,
+            payload,
         });
     const setError = (message: string) =>
         dispatch({ type: ActionTypes.SET_ERROR, payload: message });

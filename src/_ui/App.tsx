@@ -1,5 +1,4 @@
-import React, { lazy, MouseEvent, Suspense, useCallback } from 'react';
-
+import React, { lazy, MouseEvent, Suspense, useCallback, useMemo } from 'react';
 import { useQuizStorage } from '../_services/store/storageAdapter.ts';
 import { useCheckAnswer } from '../_services/useCheckAnswer.ts';
 import { useNextQuestion } from '../_services/useNextQuestion.ts';
@@ -16,7 +15,6 @@ const MemoizedQuestionCard = lazy(() => import('./QuestionCard'));
 
 const App: React.FC = () => {
     const { state } = useQuizStorage();
-
     const { gameOver, userAnswers, loading, questions, currentQuestionNumber, score, error } =
         state;
 
@@ -24,41 +22,66 @@ const App: React.FC = () => {
     const checkAnswer = useCheckAnswer();
     const nextQuestion = useNextQuestion();
 
+    // Handle the click event to start the trivia game
     const handleStartClick = useCallback(async () => {
         await startTrivia();
     }, [startTrivia]);
 
+    // Handle the selection of an answer
     const handleAnswerSelect = useCallback(
         (evt: MouseEvent<HTMLButtonElement>) => {
-            checkAnswer(evt);
+            checkAnswer(evt.currentTarget.value);
         },
         [checkAnswer],
     );
 
+    // Handle the click event to go to the next question
     const handleNextQuestionClick = useCallback(() => {
         nextQuestion();
     }, [nextQuestion]);
 
-    const shouldShowStartButton = (): boolean => gameOver || userAnswers.length === TOTAL_QUESTIONS;
-    const shouldShowQuestionCard = (): boolean => !loading && !gameOver && questions.length > 0;
-    const shouldShowNextButton = (): boolean =>
-        !gameOver &&
-        !loading &&
-        userAnswers.length === currentQuestionNumber + 1 &&
-        currentQuestionNumber !== TOTAL_QUESTIONS - 1;
+    // Determine whether to show the Start button
+    const shouldShowStartButton = useMemo(
+        () => gameOver || userAnswers.length === TOTAL_QUESTIONS,
+        [gameOver, userAnswers.length],
+    );
+
+    // Determine whether to show the QuestionCard component
+    const shouldShowQuestionCard = useMemo(
+        () => !loading && !gameOver && questions.length > 0,
+        [loading, gameOver, questions.length],
+    );
+
+    // Determine whether to show the Next button
+    const shouldShowNextButton = useMemo(
+        () =>
+            !gameOver &&
+            !loading &&
+            userAnswers.length === currentQuestionNumber + 1 &&
+            currentQuestionNumber !== TOTAL_QUESTIONS - 1,
+        [gameOver, loading, userAnswers.length, currentQuestionNumber],
+    );
 
     return (
         <>
             <GlobalStyle />
             <Wrapper>
                 <h1>SPORTS BRAIN BUZZ</h1>
-                {shouldShowStartButton() && <StartButton onClick={handleStartClick} />}
+
+                {/* Display error message at the top if there is any */}
+                {error && <ErrorMessage message={error} />}
+
+                {/* Conditional rendering for the Start button */}
+                {shouldShowStartButton && <StartButton onClick={handleStartClick} />}
+
+                {/* Display the score if the game is not over */}
                 {!gameOver && <Score score={score} />}
 
+                {/* Display loading spinner or the QuestionCard component */}
                 {loading ? (
                     <Loading />
                 ) : (
-                    shouldShowQuestionCard() && (
+                    shouldShowQuestionCard && (
                         <Suspense fallback={<p>Loading...</p>}>
                             <MemoizedQuestionCard
                                 questionNr={currentQuestionNumber + 1}
@@ -72,8 +95,8 @@ const App: React.FC = () => {
                     )
                 )}
 
-                {shouldShowNextButton() && <NextButton onClick={handleNextQuestionClick} />}
-                {error && <ErrorMessage message={error} />}
+                {/* Conditional rendering for the Next button */}
+                {shouldShowNextButton && <NextButton onClick={handleNextQuestionClick} />}
             </Wrapper>
         </>
     );
