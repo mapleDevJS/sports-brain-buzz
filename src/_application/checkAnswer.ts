@@ -4,8 +4,7 @@ type Dependencies = {
     quizStorage: QuizStorageService;
 };
 
-export const checkAnswer = (answer: string, dependencies: Dependencies) => {
-    const { quizStorage } = dependencies;
+export const checkAnswer = (answer: string, { quizStorage }: Dependencies) => {
     const { state, checkAnswer: checkAnswerStorage } = quizStorage;
 
     if (state.gameOver) return;

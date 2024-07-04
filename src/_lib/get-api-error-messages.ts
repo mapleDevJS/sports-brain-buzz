@@ -1,7 +1,7 @@
 // Import ResponseCode enum.
 import { ResponseCode } from '../types/response-code.enum.ts';
 
-const ERROR_MESSAGE_BASE = 'Failed to fetch quiz token.';
+export const ERROR_MESSAGE_BASE = 'Failed to fetch quiz token.';
 
 // Update responseMessages to handle all ResponseCode cases.
 const responseMessages: Omit<Record<ResponseCode, string>, ResponseCode.Success> = {

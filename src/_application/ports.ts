@@ -40,7 +40,7 @@ export interface QuizStorageService {
     state: InitialState;
     startQuiz: () => void;
     setToken: () => void;
-    setFetchTokenError: () => void;
+    setFetchTokenError: (message: string) => void;
     setError: (message: string) => void;
     setQuestions: (questionState: QuestionsState[]) => void;
     checkAnswer: (answer: string, correctAnswer: string, question: string) => void;

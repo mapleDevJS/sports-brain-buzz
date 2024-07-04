@@ -7,15 +7,14 @@ type Dependencies = {
     quizStorage: QuizStorageService;
 };
 
-export const startTrivia = async (dependencies: Dependencies) => {
-    const { quizStorage } = dependencies;
-    const { startQuiz, setToken, setFetchTokenError } = quizStorage;
+export const startTrivia = async ({ quizStorage }: Dependencies) => {
+    const { startQuiz } = quizStorage;
 
     startQuiz();
     const token = localStorage.getItem('sessionToken');
 
     if (!token) {
-        await fetchToken(setToken, setFetchTokenError);
+        await fetchToken(quizStorage);
     }
     const existingToken = localStorage.getItem('sessionToken');
     if (existingToken) {
