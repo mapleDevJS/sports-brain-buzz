@@ -30,7 +30,7 @@ const App: React.FC = () => {
 
     const handleAnswerSelect = useCallback(
         (evt: MouseEvent<HTMLButtonElement>) => {
-            checkAnswer(evt);
+            checkAnswer(evt.currentTarget.value);
         },
         [checkAnswer],
     );
