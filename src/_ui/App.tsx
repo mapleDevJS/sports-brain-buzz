@@ -1,5 +1,4 @@
-import React, { lazy, MouseEvent, Suspense, useCallback } from 'react';
-
+import React, { lazy, MouseEvent, Suspense, useCallback, useMemo } from 'react';
 import { useQuizStorage } from '../_services/store/storageAdapter.ts';
 import { useCheckAnswer } from '../_services/useCheckAnswer.ts';
 import { useNextQuestion } from '../_services/useNextQuestion.ts';
@@ -16,7 +15,6 @@ const MemoizedQuestionCard = lazy(() => import('./QuestionCard'));
 
 const App: React.FC = () => {
     const { state } = useQuizStorage();
-
     const { gameOver, userAnswers, loading, questions, currentQuestionNumber, score, error } =
         state;
 
@@ -39,26 +37,36 @@ const App: React.FC = () => {
         nextQuestion();
     }, [nextQuestion]);
 
-    const shouldShowStartButton = (): boolean => gameOver || userAnswers.length === TOTAL_QUESTIONS;
-    const shouldShowQuestionCard = (): boolean => !loading && !gameOver && questions.length > 0;
-    const shouldShowNextButton = (): boolean =>
-        !gameOver &&
-        !loading &&
-        userAnswers.length === currentQuestionNumber + 1 &&
-        currentQuestionNumber !== TOTAL_QUESTIONS - 1;
+    const shouldShowStartButton = useMemo(
+        () => gameOver || userAnswers.length === TOTAL_QUESTIONS,
+        [gameOver, userAnswers.length],
+    );
+
+    const shouldShowQuestionCard = useMemo(
+        () => !loading && !gameOver && questions.length > 0,
+        [loading, gameOver, questions.length],
+    );
+
+    const shouldShowNextButton = useMemo(
+        () =>
+            !gameOver &&
+            !loading &&
+            userAnswers.length === currentQuestionNumber + 1 &&
+            currentQuestionNumber !== TOTAL_QUESTIONS - 1,
+        [gameOver, loading, userAnswers.length, currentQuestionNumber],
+    );
 
     return (
         <>
             <GlobalStyle />
             <Wrapper>
                 <h1>SPORTS BRAIN BUZZ</h1>
-                {shouldShowStartButton() && <StartButton onClick={handleStartClick} />}
+                {shouldShowStartButton && <StartButton onClick={handleStartClick} />}
                 {!gameOver && <Score score={score} />}
-
                 {loading ? (
                     <Loading />
                 ) : (
-                    shouldShowQuestionCard() && (
+                    shouldShowQuestionCard && (
                         <Suspense fallback={<p>Loading...</p>}>
                             <MemoizedQuestionCard
                                 questionNr={currentQuestionNumber + 1}
@@ -71,8 +79,7 @@ const App: React.FC = () => {
                         </Suspense>
                     )
                 )}
-
-                {shouldShowNextButton() && <NextButton onClick={handleNextQuestionClick} />}
+                {shouldShowNextButton && <NextButton onClick={handleNextQuestionClick} />}
                 {error && <ErrorMessage message={error} />}
             </Wrapper>
         </>
