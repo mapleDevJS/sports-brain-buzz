@@ -22,10 +22,12 @@ const App: React.FC = () => {
     const checkAnswer = useCheckAnswer();
     const nextQuestion = useNextQuestion();
 
+    // Handle the click event to start the trivia game
     const handleStartClick = useCallback(async () => {
         await startTrivia();
     }, [startTrivia]);
 
+    // Handle the selection of an answer
     const handleAnswerSelect = useCallback(
         (evt: MouseEvent<HTMLButtonElement>) => {
             checkAnswer(evt.currentTarget.value);
@@ -33,20 +35,24 @@ const App: React.FC = () => {
         [checkAnswer],
     );
 
+    // Handle the click event to go to the next question
     const handleNextQuestionClick = useCallback(() => {
         nextQuestion();
     }, [nextQuestion]);
 
+    // Determine whether to show the Start button
     const shouldShowStartButton = useMemo(
         () => gameOver || userAnswers.length === TOTAL_QUESTIONS,
         [gameOver, userAnswers.length],
     );
 
+    // Determine whether to show the QuestionCard component
     const shouldShowQuestionCard = useMemo(
         () => !loading && !gameOver && questions.length > 0,
         [loading, gameOver, questions.length],
     );
 
+    // Determine whether to show the Next button
     const shouldShowNextButton = useMemo(
         () =>
             !gameOver &&
@@ -61,8 +67,17 @@ const App: React.FC = () => {
             <GlobalStyle />
             <Wrapper>
                 <h1>SPORTS BRAIN BUZZ</h1>
+
+                {/* Display error message at the top if there is any */}
+                {error && <ErrorMessage message={error} />}
+
+                {/* Conditional rendering for the Start button */}
                 {shouldShowStartButton && <StartButton onClick={handleStartClick} />}
+
+                {/* Display the score if the game is not over */}
                 {!gameOver && <Score score={score} />}
+
+                {/* Display loading spinner or the QuestionCard component */}
                 {loading ? (
                     <Loading />
                 ) : (
@@ -79,8 +94,9 @@ const App: React.FC = () => {
                         </Suspense>
                     )
                 )}
+
+                {/* Conditional rendering for the Next button */}
                 {shouldShowNextButton && <NextButton onClick={handleNextQuestionClick} />}
-                {error && <ErrorMessage message={error} />}
             </Wrapper>
         </>
     );
