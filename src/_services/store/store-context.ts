@@ -8,9 +8,6 @@ export const StoreContext = createContext<QuizStorageService>({
     startQuiz(): void {
         throw new Error('Method not implemented.');
     },
-    setToken(): void {
-        throw new Error('Method not implemented.');
-    },
     setFetchTokenError(): void {
         throw new Error('Method not implemented.');
     },

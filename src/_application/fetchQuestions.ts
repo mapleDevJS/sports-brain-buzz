@@ -8,6 +8,9 @@ import { ResponseCode } from '../types/response-code.enum.ts';
 import { QuizStorageService } from './ports.ts';
 import { startTrivia } from './startTrivia.ts';
 
+// Each IP can only access the API once every 5 seconds.
+const API_RATE_LIMIT = 5000;
+
 export const fetchQuestions = async (
     token: string,
     quizStorage: QuizStorageService,
@@ -29,6 +32,9 @@ export const fetchQuestions = async (
             case ResponseCode.NotFound:
                 localStorage.removeItem('sessionToken');
                 await startTrivia({ quizStorage });
+                break;
+            case ResponseCode.RateLimit:
+                await startTrivia({ quizStorage }, API_RATE_LIMIT);
                 break;
             default:
                 throw new Error(`${getApiErrorMessage(responseCode)}`);
