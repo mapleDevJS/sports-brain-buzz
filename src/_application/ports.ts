@@ -39,7 +39,6 @@ export interface HttpService {
 export interface QuizStorageService {
     state: InitialState;
     startQuiz: () => void;
-    setToken: () => void;
     setFetchTokenError: (message: string) => void;
     setError: (message: string) => void;
     setQuestions: (questionState: QuestionsState[]) => void;

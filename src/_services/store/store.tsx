@@ -14,7 +14,6 @@ export const Provider: FC<ProviderProps> = ({ children }) => {
     const [state, dispatch] = useReducer(quizReducer, initialState);
 
     const startQuiz = () => dispatch({ type: ActionTypes.START_QUIZ });
-    const setToken = () => dispatch({ type: ActionTypes.SET_TOKEN });
     const setFetchTokenError = (payload: string) =>
         dispatch({
             type: ActionTypes.SET_ERROR,
@@ -41,7 +40,6 @@ export const Provider: FC<ProviderProps> = ({ children }) => {
         () => ({
             state,
             startQuiz,
-            setToken,
             setFetchTokenError,
             setError,
             setQuestions,

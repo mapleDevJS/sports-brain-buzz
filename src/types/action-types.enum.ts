@@ -5,5 +5,4 @@ export const ActionTypes = {
     NEXT_QUESTION: 'NEXT_QUESTION',
     CHECK_ANSWER: 'CHECK_ANSWER',
     SET_ERROR: 'SET_ERROR',
-    SET_TOKEN: 'SET_TOKEN',
 } as const;

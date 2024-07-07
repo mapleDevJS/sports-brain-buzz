@@ -64,11 +64,6 @@ const setError = (
     error: action.payload,
 });
 
-const setToken = (state: InitialState): InitialState => ({
-    ...state,
-    loading: false,
-});
-
 export const quizReducer = (state: InitialState, action: ActionType): InitialState => {
     switch (action.type) {
         case ActionTypes.START_QUIZ:
@@ -81,8 +76,6 @@ export const quizReducer = (state: InitialState, action: ActionType): InitialSta
             return checkAnswer(state, action);
         case ActionTypes.SET_ERROR:
             return setError(state, action);
-        case ActionTypes.SET_TOKEN:
-            return setToken(state);
         default:
             return state;
     }
