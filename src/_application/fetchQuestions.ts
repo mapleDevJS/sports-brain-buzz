@@ -1,5 +1,5 @@
 import { createQuestionState } from '../_lib/createQuestionState.ts';
-import { getApiErrorMessage } from '../_lib/get-api-error-messages.ts';
+import { getApiErrorMessage } from '../_lib/getApiErrorMessages.ts';
 import { quizApiService } from '../_services/quiz-api.service.ts';
 import { localStorage } from '../_services/store/storageAdapter.ts';
 import { TOTAL_QUESTIONS } from '../constants/app.constants.ts';

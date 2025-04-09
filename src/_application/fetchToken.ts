@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE_BASE } from '../_lib/get-api-error-messages.ts';
+import { ERROR_MESSAGE_BASE } from '../_lib/getApiErrorMessages.ts';
 import { quizApiService } from '../_services/quiz-api.service.ts';
 import { localStorage } from '../_services/store/storageAdapter.ts';
 import { QuizStorageService } from './ports.ts';
