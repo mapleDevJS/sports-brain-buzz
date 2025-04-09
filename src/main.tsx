@@ -5,18 +5,19 @@ import { Provider } from './_services/store/store.tsx';
 import App from './_ui/App.tsx';
 
 const ROOT_ELEMENT_ID = 'root';
+
 const rootElement = document.getElementById(ROOT_ELEMENT_ID);
 
 if (rootElement) {
     const root = createRoot(rootElement);
+
     root.render(
-        <Provider>
-            <React.StrictMode>
+        <React.StrictMode>
+            <Provider>
                 <App />
-            </React.StrictMode>
-            ,
-        </Provider>,
+            </Provider>
+        </React.StrictMode>
     );
 } else {
-    console.error(`Element with ID '${ROOT_ELEMENT_ID}' not found.`);
+    console.error(`Element with ID '${ROOT_ELEMENT_ID}' was not found.`);
 }
