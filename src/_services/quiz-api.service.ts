@@ -15,7 +15,7 @@ export const quizApiService: QuizApiService = {
         return apiService.get<TokenRdo>(url);
     },
     resetToken: async (token: string) => {
-        const url = getResetTokenUrl(token);
+        const url = getResetTokenUrl({resetToken: token});
         return apiService.get<ResetTokenRdo>(url);
     },
 };

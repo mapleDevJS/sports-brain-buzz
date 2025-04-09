@@ -1,6 +1,6 @@
 {
     "name": "sports-brain-buzz",
-    "version": "12.2.0",
+    "version": "13.0.0",
     "private": true,
     "type": "module",
     "description": "A web application for sports enthusiasts using React and TypeScript.",
