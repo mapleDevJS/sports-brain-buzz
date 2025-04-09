@@ -1,25 +1,60 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="A project setup with Vite, React, and TypeScript" />
+<head>
+    <!-- Character Encoding -->
+    <meta charset="UTF-8" />
 
-        <!-- Preconnect to improve load times of external resources -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Responsive Design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!-- Font stylesheets -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Catamaran:wght@700&family=Fascinate+Inline&display=swap"
-            rel="stylesheet"
-        />
+    <!-- Description for SEO -->
+    <meta name="description" content="A project setup with Vite, React, and TypeScript." />
 
-        <title>Vite + React + TS</title>
-    </head>
-    <body>
-        <div id="root"></div>
-        <script type="module" src="/src/main.tsx"></script>
-    </body>
+    <!-- Open Graph metadata for better social media link previews -->
+    <meta property="og:title" content="Vite + React + TS" />
+    <meta property="og:description" content="A project setup with Vite, React, and TypeScript." />
+    <meta property="og:image" content="/vite.svg" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Vite + React + TS" />
+    <meta name="twitter:description" content="A project setup with Vite, React, and TypeScript." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/vite.svg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <!-- Favicon fallback for non-SVG-supporting browsers -->
+    <link rel="alternate icon" href="/vite.png" />
+
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+
+    <!-- Use dns-prefetch as a backup (minor performance boost for DNS resolution) -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+    <!-- Better font loading performance with preload -->
+    <link
+        rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Catamaran:wght@700&family=Fascinate+Inline&display=swap"
+        as="style"
+    />
+    <!-- Linking the font stylesheet -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Catamaran:wght@700&family=Fascinate+Inline&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- Title -->
+    <title>Vite + React + TypeScript</title>
+</head>
+<body>
+<!-- Main root element for React -->
+<div id="root" role="main"></div>
+
+<!-- Main script -->
+<script type="module" src="/src/main.tsx"></script>
+</body>
 </html>
