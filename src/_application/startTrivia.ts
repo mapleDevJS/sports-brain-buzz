@@ -8,19 +8,29 @@ type Dependencies = {
     quizStorage: QuizStorageService;
 };
 
-export const startTrivia = async ({ quizStorage }: Dependencies, delayInMs?: number) => {
-    const { startQuiz } = quizStorage;
+export const startTrivia = async (
+    { quizStorage }: Dependencies,
+    delayInMs?: number
+): Promise<void> => {
+    // Start the quiz using the provided storage service
+    quizStorage.startQuiz();
 
-    startQuiz();
-    const token = localStorage.getItem('sessionToken');
+    // Get sessionToken from local storage
+    let sessionToken = localStorage.getItem('sessionToken');
 
-    if (delayInMs) await delay(delayInMs);
-
-    if (!token) {
-        await fetchToken(quizStorage);
+    // Add an artificial delay if specified
+    if (delayInMs) {
+        await delay(delayInMs);
     }
-    const existingToken = localStorage.getItem('sessionToken');
-    if (existingToken) {
-        await fetchQuestions(existingToken, quizStorage);
+
+    // Fetch a new token if not present
+    if (!sessionToken) {
+        await fetchToken(quizStorage);
+        sessionToken = localStorage.getItem('sessionToken'); // Retrieve updated token
+    }
+
+    // Fetch questions if a valid session token exists
+    if (sessionToken) {
+        await fetchQuestions(sessionToken, quizStorage);
     }
 };
