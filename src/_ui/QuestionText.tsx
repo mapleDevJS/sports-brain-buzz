@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { createMarkup } from '../_lib/createMarkup.ts';
+import { generateSanitizedMarkup } from '../_lib/generateSanitizedMarkup.ts';
 
 type QuestionTextProps = {
     question: string;
 };
 
 export const QuestionText: React.FC<QuestionTextProps> = ({ question }) => (
-    <p dangerouslySetInnerHTML={createMarkup(question)} />
+    <p dangerouslySetInnerHTML={generateSanitizedMarkup(question)} />
 );
