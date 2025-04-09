@@ -5,7 +5,7 @@ class RetryError extends Error {
 
     constructor(message: string, originalError: unknown, attempts: number) {
         super(message);
-        this.name = "RetryError";
+        this.name = 'RetryError';
         this.originalError = originalError;
         this.attempts = attempts;
     }
@@ -24,7 +24,7 @@ export interface RetryOptions {
 // Retry function with configurable backoff and retry logic
 export const retryWithBackoff = async <T>(
     operation: () => Promise<T>,
-    options: RetryOptions
+    options: RetryOptions,
 ): Promise<T> => {
     const {
         initialDelay,
@@ -32,7 +32,7 @@ export const retryWithBackoff = async <T>(
         backoffStrategy = (delay) => delay * 2, // Default exponential backoff
         shouldRetry = () => true, // Default: always retry on errors
         signal,
-        onRetry
+        onRetry,
     } = options;
 
     // Validate `initialDelay` and `maxRetries` to prevent invalid configurations
@@ -52,15 +52,15 @@ export const retryWithBackoff = async <T>(
             const timeoutId = setTimeout(resolve, delay);
 
             // Handle signal cancellation during delay period
-            signal?.addEventListener("abort", () => {
+            signal?.addEventListener('abort', () => {
                 clearTimeout(timeoutId);
-                reject(new Error("Retry operation was cancelled."));
+                reject(new Error('Retry operation was cancelled.'));
             });
         });
 
     // Pre-check for signal cancellation before entering retry loop
     if (signal?.aborted) {
-        throw new Error("Retry operation was cancelled before execution started.");
+        throw new Error('Retry operation was cancelled before execution started.');
     }
 
     // Main retry logic
@@ -73,11 +73,7 @@ export const retryWithBackoff = async <T>(
 
             // Check if further retries are allowed
             if (attempt >= maxRetries || !shouldRetry(error, attempt)) {
-                throw new RetryError(
-                    `Operation failed after ${attempt} attempts.`,
-                    error,
-                    attempt
-                );
+                throw new RetryError(`Operation failed after ${attempt} attempts.`, error, attempt);
             }
 
             // Hook for observing retry events
@@ -94,5 +90,5 @@ export const retryWithBackoff = async <T>(
     }
 
     // While logic should prevent reaching this point, provide a fallback error
-    throw new Error("Unexpected error: retry logic terminated unexpectedly.");
+    throw new Error('Unexpected error: retry logic terminated unexpectedly.');
 };

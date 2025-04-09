@@ -23,7 +23,7 @@ export const fetchQuestions = async (
         const { data } = await quizApiService.fetchQuestions(
             TOTAL_QUESTIONS,
             Difficulty.MEDIUM,
-            token
+            token,
         );
 
         const { response_code: responseCode, results } = data;
@@ -43,7 +43,10 @@ export const fetchQuestions = async (
                 await startTrivia({ quizStorage });
                 break;
             case ResponseCode.RateLimit:
-                await retryWithBackoff(() => startTrivia({ quizStorage }), {initialDelay: API_RATE_LIMIT, maxRetries: 1});
+                await retryWithBackoff(() => startTrivia({ quizStorage }), {
+                    initialDelay: API_RATE_LIMIT,
+                    maxRetries: 3,
+                });
                 break;
             default:
                 setError(getApiErrorMessage(responseCode));
