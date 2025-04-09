@@ -33,7 +33,7 @@ const ensureNonEmptyString = (value: string, fieldName: string): void => {
 const ensureValidDifficulty = (difficulty: Difficulty): void => {
     if (!Object.values(Difficulty).includes(difficulty)) {
         throw new Error(
-            `Invalid difficulty "${difficulty}". Allowed values: ${Object.values(Difficulty).join(', ')}`
+            `Invalid difficulty "${difficulty}". Allowed values: ${Object.values(Difficulty).join(', ')}`,
         );
     }
 };
@@ -59,7 +59,7 @@ export const getFetchQuestionsUrl = (
     amount: number,
     difficulty: Difficulty,
     token: string,
-    extraParams: Record<string, string> = {}
+    extraParams: Record<string, string> = {},
 ): string => {
     // Validate inputs
     ensurePositiveInteger(amount, 'Amount');

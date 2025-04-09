@@ -6,10 +6,13 @@ export const ERROR_MESSAGE_BASE = 'Failed to fetch quiz token.';
 /** Specific error reasons for the given ResponseCodes. */
 const ERROR_REASONS: Record<ResponseCode, string> = {
     [ResponseCode.NoResults]: "The API doesn't have enough questions for your query.",
-    [ResponseCode.InvalidParameter]: "Contains an invalid parameter. Arguments passed in aren't valid.",
-    [ResponseCode.NotFound]: "Session Token does not exist.",
-    [ResponseCode.Empty]: "Session Token has returned all possible questions for the specified query. Resetting the Token is necessary.",
-    [ResponseCode.RateLimit]: "Too many requests have occurred. Each IP can only access the API once every 5 seconds.",
+    [ResponseCode.InvalidParameter]:
+        "Contains an invalid parameter. Arguments passed in aren't valid.",
+    [ResponseCode.NotFound]: 'Session Token does not exist.',
+    [ResponseCode.Empty]:
+        'Session Token has returned all possible questions for the specified query. Resetting the Token is necessary.',
+    [ResponseCode.RateLimit]:
+        'Too many requests have occurred. Each IP can only access the API once every 5 seconds.',
     [ResponseCode.Success]: '', // Unused, but kept for enum completeness.
 };
 
