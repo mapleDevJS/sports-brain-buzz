@@ -63,6 +63,9 @@ export const retryWithBackoff = async <T>(
         throw new Error('Retry operation was cancelled before execution started.');
     }
 
+    // Apply the initial delay before the first attempt
+    await applyBackoffDelay(initialDelay);
+
     // Main retry logic
     while (attempt < maxRetries) {
         try {

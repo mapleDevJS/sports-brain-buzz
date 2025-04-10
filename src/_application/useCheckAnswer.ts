@@ -1,5 +1,5 @@
-import { checkAnswer } from '../_application/checkAnswer.ts';
-import { useQuizStorage } from './store/storage-adapter.ts';
+import { useQuizStorage } from '../_services/store/storage-adapter.ts';
+import { checkAnswer } from './checkAnswer.ts';
 
 export const useCheckAnswer = () => {
     const quizStorage = useQuizStorage();

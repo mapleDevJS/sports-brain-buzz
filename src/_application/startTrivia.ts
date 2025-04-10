@@ -1,16 +1,26 @@
-import { delay } from '../_lib/delay.ts';
-import { fetchQuestions } from './fetchQuestions.ts';
-import { fetchToken } from './fetchToken.ts';
-import { LocalStorageService, QuizStorageService } from './ports.ts';
+// import { delay } from '../_lib/delay.ts';
+// import { fetchToken } from './fetchToken.ts';
+import { LocalStorageService, LoggerService, QuizStorageService } from './ports.ts';
 
 type Dependencies = {
     quizStorage: QuizStorageService;
     localStorage: LocalStorageService;
+    loggerService: LoggerService;
+    fetchQuestions: (
+        token: string,
+        quizStorage: QuizStorageService,
+        localStorage: LocalStorageService,
+        loggerService: LoggerService,
+    ) => Promise<void>;
+    fetchToken: (
+        quizStorage: QuizStorageService,
+        localStorage: LocalStorageService,
+    ) => Promise<void>;
 };
 
 export const startTrivia = async (
-    { quizStorage, localStorage }: Dependencies,
-    delayInMs?: number,
+    { quizStorage, localStorage, loggerService, fetchQuestions, fetchToken }: Dependencies,
+    // delayInMs?: number,
 ): Promise<void> => {
     // Start the quiz using the provided storage service
     quizStorage.startQuiz();
@@ -19,9 +29,9 @@ export const startTrivia = async (
     let sessionToken = localStorage.getItem('sessionToken');
 
     // Add an artificial delay if specified
-    if (delayInMs) {
-        await delay(delayInMs);
-    }
+    // if (delayInMs) {
+    //     await delay(delayInMs);
+    // }
 
     // Fetch a new token if not present
     if (!sessionToken) {
@@ -31,6 +41,6 @@ export const startTrivia = async (
 
     // Fetch questions if a valid session token exists
     if (sessionToken) {
-        await fetchQuestions(sessionToken, quizStorage, localStorage);
+        await fetchQuestions(sessionToken, quizStorage, localStorage, loggerService);
     }
 };

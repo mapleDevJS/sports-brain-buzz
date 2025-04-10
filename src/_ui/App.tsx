@@ -1,9 +1,9 @@
 import React, { lazy, MouseEvent, Suspense, useCallback, useMemo } from 'react';
 
+import { useCheckAnswer } from '../_application/useCheckAnswer.ts';
+import { useNextQuestion } from '../_application/useNextQuestion.ts';
+import { useStartTrivia } from '../_application/useStartTrivia.ts';
 import { useQuizStorage } from '../_services/store/storage-adapter.ts';
-import { useCheckAnswer } from '../_services/useCheckAnswer.ts';
-import { useNextQuestion } from '../_services/useNextQuestion.ts';
-import { useStartTrivia } from '../_services/useStartTrivia.ts';
 import { TOTAL_QUESTIONS } from '../constants/app.constants';
 import { GlobalStyle, Wrapper } from './App.styles';
 import ErrorMessage from './ErrorMessage';
