@@ -2,11 +2,10 @@ import { createQuestionState } from '../_lib/createQuestionState.ts';
 import { getApiErrorMessage } from '../_lib/getApiErrorMessages.ts';
 import { retryWithBackoff } from '../_lib/retryWithBackoff.ts';
 import { quizApiService } from '../_services/quiz-api.service.ts';
-import { localStorage } from '../_services/store/storageAdapter.ts';
 import { TOTAL_QUESTIONS } from '../constants/app.constants.ts';
 import { Difficulty } from '../types/difficulty.enum.ts';
 import { ResponseCode } from '../types/response-code.enum.ts';
-import { QuizStorageService } from './ports.ts';
+import { LocalStorageService, QuizStorageService } from './ports.ts';
 import { startTrivia } from './startTrivia.ts';
 
 // Each IP can only access the API once every 5 seconds.
@@ -16,6 +15,7 @@ const GENERIC_ERROR_MESSAGE = 'Failed to fetch quiz questions. Please try again.
 export const fetchQuestions = async (
     token: string,
     quizStorage: QuizStorageService,
+    localStorage: LocalStorageService,
 ): Promise<void> => {
     const { setError, setQuestions } = quizStorage;
 
@@ -40,10 +40,10 @@ export const fetchQuestions = async (
             case ResponseCode.Empty:
             case ResponseCode.NotFound:
                 localStorage.removeItem('sessionToken');
-                await startTrivia({ quizStorage });
+                await startTrivia({ quizStorage, localStorage });
                 break;
             case ResponseCode.RateLimit:
-                await retryWithBackoff(() => startTrivia({ quizStorage }), {
+                await retryWithBackoff(() => startTrivia({ quizStorage, localStorage }), {
                     initialDelay: API_RATE_LIMIT,
                     maxRetries: 3,
                 });

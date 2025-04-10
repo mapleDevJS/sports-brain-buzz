@@ -1,15 +1,15 @@
 import { delay } from '../_lib/delay.ts';
-import { localStorage } from '../_services/store/storageAdapter.ts';
 import { fetchQuestions } from './fetchQuestions.ts';
 import { fetchToken } from './fetchToken.ts';
-import { QuizStorageService } from './ports.ts';
+import { LocalStorageService, QuizStorageService } from './ports.ts';
 
 type Dependencies = {
     quizStorage: QuizStorageService;
+    localStorage: LocalStorageService;
 };
 
 export const startTrivia = async (
-    { quizStorage }: Dependencies,
+    { quizStorage, localStorage }: Dependencies,
     delayInMs?: number,
 ): Promise<void> => {
     // Start the quiz using the provided storage service
@@ -25,12 +25,12 @@ export const startTrivia = async (
 
     // Fetch a new token if not present
     if (!sessionToken) {
-        await fetchToken(quizStorage);
+        await fetchToken(quizStorage, localStorage);
         sessionToken = localStorage.getItem('sessionToken'); // Retrieve updated token
     }
 
     // Fetch questions if a valid session token exists
     if (sessionToken) {
-        await fetchQuestions(sessionToken, quizStorage);
+        await fetchQuestions(sessionToken, quizStorage, localStorage);
     }
 };
