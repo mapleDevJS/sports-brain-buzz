@@ -16,7 +16,7 @@ if (rootElement) {
             <Provider>
                 <App />
             </Provider>
-        </React.StrictMode>
+        </React.StrictMode>,
     );
 } else {
     console.error(`Element with ID '${ROOT_ELEMENT_ID}' was not found.`);

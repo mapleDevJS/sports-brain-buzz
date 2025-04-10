@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Answer } from '../_domain/answer.type.ts';
-import { ButtonWrapper } from './QuestionCard.styles.ts';
 import { generateSanitizedMarkup } from '../_lib/generateSanitizedMarkup.ts';
+import { ButtonWrapper } from './QuestionCard.styles.ts';
 
 type Props = {
     answer: string;

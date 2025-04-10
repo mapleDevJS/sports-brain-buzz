@@ -10,7 +10,7 @@ type Dependencies = {
 
 export const startTrivia = async (
     { quizStorage }: Dependencies,
-    delayInMs?: number
+    delayInMs?: number,
 ): Promise<void> => {
     // Start the quiz using the provided storage service
     quizStorage.startQuiz();
