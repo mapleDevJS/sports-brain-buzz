@@ -1,5 +1,5 @@
 import { startTrivia } from '../_application/startTrivia.ts';
-import { useLocalStorage, useQuizStorage } from './store/storageAdapter.ts';
+import { useLocalStorage, useQuizStorage } from './store/storage-adapter.ts';
 
 export const useStartTrivia = () => {
     const quizStorage = useQuizStorage();

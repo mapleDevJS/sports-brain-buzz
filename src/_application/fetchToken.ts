@@ -1,5 +1,5 @@
 import { ERROR_MESSAGE_BASE } from '../_lib/getApiErrorMessages.ts';
-import { loggerService } from '../_services/loggerService.ts';
+import { loggerService } from '../_services/logger.service.ts';
 import { quizApiService } from '../_services/quiz-api.service.ts';
 import { LocalStorageService, QuizStorageService } from './ports.ts';
 

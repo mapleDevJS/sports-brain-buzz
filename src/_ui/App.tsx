@@ -1,6 +1,6 @@
 import React, { lazy, MouseEvent, Suspense, useCallback, useMemo } from 'react';
 
-import { useQuizStorage } from '../_services/store/storageAdapter.ts';
+import { useQuizStorage } from '../_services/store/storage-adapter.ts';
 import { useCheckAnswer } from '../_services/useCheckAnswer.ts';
 import { useNextQuestion } from '../_services/useNextQuestion.ts';
 import { useStartTrivia } from '../_services/useStartTrivia.ts';
