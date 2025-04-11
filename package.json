@@ -1,6 +1,6 @@
 {
     "name": "sports-brain-buzz",
-    "version": "18.0.1",
+    "version": "18.0.2",
     "private": true,
     "type": "module",
     "description": "A web application for sports enthusiasts using React and TypeScript.",
@@ -15,7 +15,7 @@
         "web application"
     ],
     "engines": {
-        "node": "20.15.1"
+        "node": "20"
     },
     "scripts": {
         "dev": "vite",
