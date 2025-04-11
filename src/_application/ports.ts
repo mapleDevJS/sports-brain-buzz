@@ -54,3 +54,10 @@ export interface LocalStorageService {
     key(index: number): string | null;
     length: number;
 }
+
+export interface LoggerService {
+    log: (...args: unknown[]) => void;
+    info: (...args: unknown[]) => void;
+    warn: (...args: unknown[]) => void;
+    error: (...args: unknown[]) => void;
+}

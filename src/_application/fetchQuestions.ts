@@ -1,46 +1,59 @@
 import { createQuestionState } from '../_lib/createQuestionState.ts';
-import { getApiErrorMessage } from '../_lib/get-api-error-messages.ts';
+import { getApiErrorMessage } from '../_lib/getApiErrorMessages.ts';
+import { retryWithBackoff } from '../_lib/retryWithBackoff.ts';
 import { quizApiService } from '../_services/quiz-api.service.ts';
-import { localStorage } from '../_services/store/storageAdapter.ts';
 import { TOTAL_QUESTIONS } from '../constants/app.constants.ts';
 import { Difficulty } from '../types/difficulty.enum.ts';
 import { ResponseCode } from '../types/response-code.enum.ts';
-import { QuizStorageService } from './ports.ts';
-import { startTrivia } from './startTrivia.ts';
+import { LocalStorageService, LoggerService, QuizStorageService } from './ports.ts';
+// import { startTrivia } from './startTrivia.ts';
 
 // Each IP can only access the API once every 5 seconds.
-const API_RATE_LIMIT = 5000;
+const RATE_LIMIT_MS = 5000;
+const GENERIC_ERROR_MESSAGE = 'Failed to fetch quiz questions. Please try again.';
 
 export const fetchQuestions = async (
     token: string,
     quizStorage: QuizStorageService,
+    localStorage: LocalStorageService,
+    loggerService: LoggerService,
 ): Promise<void> => {
     const { setError, setQuestions } = quizStorage;
+
     try {
         const { data } = await quizApiService.fetchQuestions(
             TOTAL_QUESTIONS,
             Difficulty.MEDIUM,
             token,
         );
-        const responseCode: ResponseCode = data.response_code;
+
+        const { response_code: responseCode, results } = data;
 
         switch (responseCode) {
             case ResponseCode.Success:
-                setQuestions(data.results.map(createQuestionState));
+                setQuestions(results.map(createQuestionState));
                 break;
             case ResponseCode.Empty:
             case ResponseCode.NotFound:
                 localStorage.removeItem('sessionToken');
-                await startTrivia({ quizStorage });
+                await fetchQuestions(token, quizStorage, localStorage, loggerService);
                 break;
             case ResponseCode.RateLimit:
-                await startTrivia({ quizStorage }, API_RATE_LIMIT);
+                loggerService.warn('Rate limit exceeded. Retrying after delay...');
+                await retryWithBackoff(
+                    () => fetchQuestions(token, quizStorage, localStorage, loggerService),
+                    {
+                        initialDelay: RATE_LIMIT_MS,
+                        maxRetries: 1,
+                    },
+                );
                 break;
             default:
-                throw new Error(`${getApiErrorMessage(responseCode)}`);
+                setError(getApiErrorMessage(responseCode));
+                break;
         }
     } catch (error) {
-        console.log(error);
-        setError('Failed to fetch quiz questions. Please try again.');
+        loggerService.error('Error fetching quiz questions:', error);
+        setError(GENERIC_ERROR_MESSAGE);
     }
 };

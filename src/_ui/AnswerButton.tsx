@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Answer } from '../_domain/answer.type.ts';
+import { generateSanitizedMarkup } from '../_lib/generateSanitizedMarkup.ts';
 import { ButtonWrapper } from './QuestionCard.styles.ts';
 
 type Props = {
@@ -27,7 +28,7 @@ export const AnswerButton: React.FC<Props> = ({ answer, userAnswer, onClick }) =
             userClicked={userClickedAnswer === answer}
         >
             <button {...buttonProps}>
-                <span dangerouslySetInnerHTML={{ __html: answer }} />
+                <span dangerouslySetInnerHTML={generateSanitizedMarkup(answer)} />
             </button>
         </ButtonWrapper>
     );

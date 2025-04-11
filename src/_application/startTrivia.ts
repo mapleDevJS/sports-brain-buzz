@@ -1,26 +1,46 @@
-import { delay } from '../_lib/delay.ts';
-import { localStorage } from '../_services/store/storageAdapter.ts';
-import { fetchQuestions } from './fetchQuestions.ts';
-import { fetchToken } from './fetchToken.ts';
-import { QuizStorageService } from './ports.ts';
+// import { delay } from '../_lib/delay.ts';
+// import { fetchToken } from './fetchToken.ts';
+import { LocalStorageService, LoggerService, QuizStorageService } from './ports.ts';
 
 type Dependencies = {
     quizStorage: QuizStorageService;
+    localStorage: LocalStorageService;
+    loggerService: LoggerService;
+    fetchQuestions: (
+        token: string,
+        quizStorage: QuizStorageService,
+        localStorage: LocalStorageService,
+        loggerService: LoggerService,
+    ) => Promise<void>;
+    fetchToken: (
+        quizStorage: QuizStorageService,
+        localStorage: LocalStorageService,
+    ) => Promise<void>;
 };
 
-export const startTrivia = async ({ quizStorage }: Dependencies, delayInMs?: number) => {
-    const { startQuiz } = quizStorage;
+export const startTrivia = async (
+    { quizStorage, localStorage, loggerService, fetchQuestions, fetchToken }: Dependencies,
+    // delayInMs?: number,
+): Promise<void> => {
+    // Start the quiz using the provided storage service
+    quizStorage.startQuiz();
 
-    startQuiz();
-    const token = localStorage.getItem('sessionToken');
+    // Get sessionToken from local storage
+    let sessionToken = localStorage.getItem('sessionToken');
 
-    if (delayInMs) await delay(delayInMs);
+    // Add an artificial delay if specified
+    // if (delayInMs) {
+    //     await delay(delayInMs);
+    // }
 
-    if (!token) {
-        await fetchToken(quizStorage);
+    // Fetch a new token if not present
+    if (!sessionToken) {
+        await fetchToken(quizStorage, localStorage);
+        sessionToken = localStorage.getItem('sessionToken'); // Retrieve updated token
     }
-    const existingToken = localStorage.getItem('sessionToken');
-    if (existingToken) {
-        await fetchQuestions(existingToken, quizStorage);
+
+    // Fetch questions if a valid session token exists
+    if (sessionToken) {
+        await fetchQuestions(sessionToken, quizStorage, localStorage, loggerService);
     }
 };
