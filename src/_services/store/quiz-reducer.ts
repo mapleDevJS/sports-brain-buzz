@@ -1,4 +1,4 @@
-import { createAnswer } from '../../_domain/createAnswer.ts';
+import { createAnswer } from '../../_lib/createAnswer.ts';
 import {
     INITIAL_QUESTION_NUMBER,
     INITIAL_SCORE,

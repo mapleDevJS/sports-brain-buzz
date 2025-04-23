@@ -1,4 +1,4 @@
-import { Answer } from './answer.type.ts';
+import { Answer } from '../_domain/answer.type';
 
 const ERROR_MESSAGE = {
     EMPTY_FIELDS: 'Question, answer and expected answer must not be empty',
