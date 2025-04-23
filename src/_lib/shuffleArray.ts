@@ -52,10 +52,7 @@ const SHUFFLE_CONSTANTS = {
  */
 export const shuffleArray = <T>(
     inputArray: readonly T[],
-    {
-        secure = true,
-        maxLength,
-    }: ShuffleOptions = {}
+    { secure = true, maxLength }: ShuffleOptions = {},
 ): T[] => {
     // Input validation
     if (!Array.isArray(inputArray)) {
@@ -71,7 +68,7 @@ export const shuffleArray = <T>(
 
     if (maxLength !== undefined && arrayLength > maxLength) {
         throw new RangeError(
-            `Array length ${arrayLength} exceeds maximum allowed length ${maxLength}`
+            `Array length ${arrayLength} exceeds maximum allowed length ${maxLength}`,
         );
     }
 
@@ -84,7 +81,8 @@ export const shuffleArray = <T>(
     const array = [...inputArray];
 
     // Check for secure random number generation availability
-    const hasSecureRandom = typeof crypto !== 'undefined' &&
+    const hasSecureRandom =
+        typeof crypto !== 'undefined' &&
         'getRandomValues' in crypto &&
         typeof crypto.getRandomValues === 'function';
 
@@ -96,7 +94,7 @@ export const shuffleArray = <T>(
         if (secure && hasSecureRandom) {
             const randomBuffer = new Uint32Array(1);
             crypto.getRandomValues(randomBuffer);
-            return Math.floor(randomBuffer[0] / (SHUFFLE_CONSTANTS.UINT32_MAX + 1) * max);
+            return Math.floor((randomBuffer[0] / (SHUFFLE_CONSTANTS.UINT32_MAX + 1)) * max);
         }
         return Math.floor(Math.random() * max);
     };
