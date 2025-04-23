@@ -24,13 +24,13 @@ export const Provider: FC<ProviderProps> = ({ children }) => {
     const setQuestions = (questionsState: QuestionsState[]) =>
         dispatch({ type: ActionTypes.SET_QUESTIONS, payload: questionsState });
 
-    const checkAnswer = (answer: string, correctAnswer: string, question: string) =>
+    const checkAnswer = (userAnswer: string, expectedAnswer: string, userQuestion: string) =>
         dispatch({
             type: ActionTypes.CHECK_ANSWER,
             payload: {
-                answer,
-                correctAnswer,
-                question,
+                userAnswer,
+                expectedAnswer,
+                userQuestion,
             },
         });
 

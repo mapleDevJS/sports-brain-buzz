@@ -7,6 +7,6 @@ export type ActionType =
     | { type: typeof ActionTypes.NEXT_QUESTION }
     | {
           type: typeof ActionTypes.CHECK_ANSWER;
-          payload: { answer: string; correctAnswer: string; question: string };
+          payload: { userAnswer: string; expectedAnswer: string; userQuestion: string };
       }
     | { type: typeof ActionTypes.SET_ERROR; payload: string };

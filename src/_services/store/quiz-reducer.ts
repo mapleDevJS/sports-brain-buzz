@@ -1,4 +1,4 @@
-import { createAnswer } from '../../_lib/createAnswer.ts';
+import { createAnswer } from '../../_domain/createAnswer.ts';
 import {
     INITIAL_QUESTION_NUMBER,
     INITIAL_SCORE,
@@ -42,15 +42,18 @@ const checkAnswer = (
     state: InitialState,
     action: {
         type: typeof ActionTypes.CHECK_ANSWER;
-        payload: { answer: string; correctAnswer: string; question: string };
+        payload: { userAnswer: string; expectedAnswer: string; userQuestion: string };
     },
 ): InitialState => {
-    const { answer, correctAnswer, question } = action.payload;
-    const correct = correctAnswer === answer;
+    const { userAnswer, expectedAnswer, userQuestion } = action.payload;
+    const isCorrect = expectedAnswer === userAnswer;
     return {
         ...state,
-        score: correct ? state.score + 1 : state.score,
-        userAnswers: [...state.userAnswers, createAnswer(question, answer, correct, correctAnswer)],
+        score: isCorrect ? state.score + 1 : state.score,
+        userAnswers: [
+            ...state.userAnswers,
+            createAnswer({ userQuestion, userAnswer, isCorrect, expectedAnswer }),
+        ],
     };
 };
 
