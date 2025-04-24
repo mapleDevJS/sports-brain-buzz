@@ -12,7 +12,7 @@ type Props = {
 const isButtonDisabled = (userAnswer: Answer | undefined): boolean => !!userAnswer;
 
 export const AnswerButton: React.FC<Props> = ({ answer, userAnswer, onClick }) => {
-    const { correctAnswer, answer: userClickedAnswer } = userAnswer || {};
+    const { expectedAnswer, userAnswer: userClickedAnswer } = userAnswer || {};
 
     const buttonProps = {
         disabled: isButtonDisabled(userAnswer),
@@ -23,7 +23,7 @@ export const AnswerButton: React.FC<Props> = ({ answer, userAnswer, onClick }) =
     return (
         <ButtonWrapper
             key={answer}
-            correct={correctAnswer === answer}
+            correct={expectedAnswer === answer}
             userClicked={userClickedAnswer === answer}
         >
             <button {...buttonProps}>

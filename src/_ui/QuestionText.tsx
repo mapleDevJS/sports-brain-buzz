@@ -1,11 +1,23 @@
 import React from 'react';
 
-import { createMarkup } from '../_lib/createMarkup.ts';
+import { sanitizeHtmlContent } from '../_lib/sanitizeHtmlContent';
 
-type QuestionTextProps = {
+interface SanitizedQuestionProps {
     question: string;
-};
+    className?: string;
+}
 
-export const QuestionText: React.FC<QuestionTextProps> = ({ question }) => (
-    <p dangerouslySetInnerHTML={createMarkup(question)} />
-);
+export const QuestionText: React.FC<SanitizedQuestionProps> = ({ question, className }) => {
+    try {
+        return (
+            <article
+                className={className}
+                data-testid="sanitized-question-content"
+                dangerouslySetInnerHTML={sanitizeHtmlContent(question)}
+            />
+        );
+    } catch (error) {
+        console.error('Failed to sanitize question content:', error);
+        return <article className={className}>Unable to display question content</article>;
+    }
+};

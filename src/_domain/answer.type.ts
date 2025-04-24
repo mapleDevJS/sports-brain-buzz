@@ -1,6 +1,6 @@
 export type Answer = {
-    question: string;
-    answer: string;
-    correct: boolean;
-    correctAnswer: string;
+    userQuestion: string;
+    userAnswer: string;
+    isCorrect: boolean;
+    expectedAnswer: string;
 };
