@@ -22,13 +22,6 @@ export interface QuizApiService {
     resetToken(token: string): Promise<HttpResponse<ResetTokenRdo>>;
 }
 
-export interface ApiService {
-    get<T>(url: string): Promise<HttpResponse<T>>;
-    post<T, U>(url: string, data: U): Promise<HttpResponse<T>>;
-    put<T, U>(url: string, data: U): Promise<HttpResponse<T>>;
-    delete<T>(url: string): Promise<HttpResponse<T>>;
-}
-
 export interface HttpService {
     get<T>(url: string): Promise<HttpResponse<T>>;
     post<T, U>(url: string, data: U): Promise<HttpResponse<T>>;
