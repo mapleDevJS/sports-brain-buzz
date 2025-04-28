@@ -1,39 +1,51 @@
-import ky from 'ky';
-
 import { HttpService } from '../_application/ports.ts';
 
-export const createHttpService = (client: typeof ky): HttpService => ({
+export const httpService: HttpService = {
     async get<T>(url: string): Promise<HttpResponse<T>> {
-        const response = await client.get(url);
-        const data = await response.json<T>();
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
+        const data = await response.json();
         return { status: response.status, data };
     },
 
     async post<T, U>(url: string, data: U): Promise<HttpResponse<T>> {
-        const response = await client.post(url, { json: data });
-        const responseData = await response.json<T>();
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        const responseData = await response.json();
         return { status: response.status, data: responseData };
     },
 
     async put<T, U>(url: string, data: U): Promise<HttpResponse<T>> {
-        const response = await client.put(url, { json: data });
-        const responseData = await response.json<T>();
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        const responseData = await response.json();
         return { status: response.status, data: responseData };
     },
 
     async delete<T>(url: string): Promise<HttpResponse<T>> {
-        const response = await client.delete(url);
-        const data = await response.json<T>();
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
+        const data = await response.json();
         return { status: response.status, data };
     },
-});
-
-// Create the default instance with a common configuration
-const defaultClient = ky.create({
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
-// Export the default configured instance
-export const httpService = createHttpService(defaultClient);
+};
