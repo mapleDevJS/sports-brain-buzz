@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 import { API_URL, CATEGORY_ID } from '../constants/api.constants';
 import { Difficulty } from '../types/difficulty.enum';
 import { API_ERRORS, QuizApiError } from './errors';
-import { createApiUrlWithErrorHandling, validateConfig } from './url';
+import { createApiUrlWithErrorHandling } from './url';
 
 interface ValidationConfig {
     readonly minAmount: number;
@@ -81,7 +81,7 @@ export const getFetchQuestionsUrl = (
     token: string,
 ): string => {
     return createApiUrlWithErrorHandling(() => {
-        validateConfig();
+        // validateConfig();
         const validatedParams = validateAndSanitizeParams(amount, difficulty, token);
 
         const params = new URLSearchParams({
@@ -95,5 +95,5 @@ export const getFetchQuestionsUrl = (
         const url = new URL('api.php', API_URL);
         url.search = params.toString();
         return url.toString();
-    }, QuizApiError);
+    });
 };

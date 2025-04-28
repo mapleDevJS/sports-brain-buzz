@@ -2,7 +2,7 @@ import DOMPurify from 'dompurify';
 
 import { API_COMMANDS, API_ENDPOINTS, API_URL } from '../constants/api.constants';
 import { API_ERRORS, TokenUrlError } from './errors';
-import { createApiUrlWithErrorHandling, validateConfig } from './url';
+import { createApiUrlWithErrorHandling } from './url';
 
 interface TokenValidationConfig {
     readonly minLength: number;
@@ -28,7 +28,6 @@ const validateAndSanitizeToken = (token: string): string => {
 
 export const getResetTokenUrl = (token: string): string => {
     return createApiUrlWithErrorHandling(() => {
-        validateConfig();
         const validatedToken = validateAndSanitizeToken(token);
 
         const url = new URL(API_ENDPOINTS.TOKEN, API_URL);
@@ -36,5 +35,5 @@ export const getResetTokenUrl = (token: string): string => {
         url.searchParams.append('token', validatedToken);
 
         return url.toString();
-    }, TokenUrlError);
+    });
 };
