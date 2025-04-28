@@ -4,7 +4,7 @@
 type ShuffleOptions = {
     /** If true, uses cryptographic randomness (default: true) */
     secure?: boolean;
-    /** Maximum allowed length of input array */
+    /** Maximum allowed length of an input array */
     maxLength?: number;
 };
 

@@ -69,7 +69,7 @@ const App: React.FC = () => {
             <Wrapper>
                 <h1>SPORTS BRAIN BUZZ</h1>
 
-                {/* Display error message at the top if there is any */}
+                {/* Display an error message at the top if there is any */}
                 {error && <ErrorMessage message={error} />}
 
                 {/* Conditional rendering for the Start button */}
