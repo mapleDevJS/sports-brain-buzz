@@ -20,21 +20,19 @@ export const createApiUrl = (
     const fullUrl = urljoin(cleanBaseUrl, endpoint);
 
     const queryParams = Object.fromEntries(
-        Object.entries(options).filter(([, value]) => value !== undefined)
+        Object.entries(options).filter(([, value]) => value !== undefined),
     );
 
     return new URL(`${fullUrl}?${queryString.stringify(queryParams)}`);
 };
 
-export const createApiUrlWithErrorHandling = (
-    urlCreator: () => string,
-): string => {
+export const createApiUrlWithErrorHandling = (urlCreator: () => string): string => {
     try {
         return urlCreator();
     } catch (error) {
         throw createError(
             500,
-            `URL creation failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+            `URL creation failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
         );
     }
 };

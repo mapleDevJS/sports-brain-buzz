@@ -1,8 +1,5 @@
 import { API_COMMANDS, API_ENDPOINTS, API_URL } from '../constants/api.constants';
-import {
-    createApiUrl,
-    createApiUrlWithErrorHandling
-} from './url';
+import { createApiUrl, createApiUrlWithErrorHandling } from './url';
 
 export const getFetchTokenUrl = (): string => {
     return createApiUrlWithErrorHandling(() => {

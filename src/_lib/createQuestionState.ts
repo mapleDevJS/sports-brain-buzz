@@ -18,6 +18,6 @@ export const createQuestionState = (question: Question): QuestionsState => {
 
     return {
         ...question,
-        answers: shuffleArray([...question.incorrect_answers, question.correct_answer])
+        answers: shuffleArray([...question.incorrect_answers, question.correct_answer]),
     };
 };
