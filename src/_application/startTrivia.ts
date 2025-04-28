@@ -1,4 +1,5 @@
-import { delay } from '../_lib/delay.ts';
+import { sleep } from 'radash';
+
 import { localStorage } from '../_services/store/storageAdapter.ts';
 import { fetchQuestions } from './fetchQuestions.ts';
 import { fetchToken } from './fetchToken.ts';
@@ -14,7 +15,7 @@ export const startTrivia = async ({ quizStorage }: Dependencies, delayInMs?: num
     startQuiz();
     const token = localStorage.getItem('sessionToken');
 
-    if (delayInMs) await delay(delayInMs);
+    if (delayInMs) await sleep(delayInMs);
 
     if (!token) {
         await fetchToken(quizStorage);
