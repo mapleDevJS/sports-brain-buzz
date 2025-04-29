@@ -6,6 +6,6 @@ export function useQuizStorage(): QuizStorageService {
     return useStore();
 }
 
-export const localStorage: LocalStorageService = {
-    ...localStore(),
-};
+export function useLocalStorage(): LocalStorageService {
+    return localStore();
+}

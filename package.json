@@ -1,6 +1,6 @@
 {
     "name": "sports-brain-buzz",
-    "version": "16.0.0",
+    "version": "18.0.0",
     "private": true,
     "type": "module",
     "description": "A web application for sports enthusiasts using React and TypeScript.",
@@ -31,6 +31,7 @@
         "dompurify": "^3.2.5",
         "http-errors": "^2.0.0",
         "ky": "^1.8.1",
+        "pino": "^9.6.0",
         "query-string": "^9.1.1",
         "radash": "^12.1.0",
         "react": "^18.3.1",

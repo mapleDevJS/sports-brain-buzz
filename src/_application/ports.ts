@@ -22,6 +22,10 @@ export interface QuizApiService {
     resetToken(token: string): Promise<HttpResponse<ResetTokenRdo>>;
 }
 
+export interface HttpClient {
+    fetch(url: string, init?: RequestInit): Promise<Response>;
+}
+
 export interface HttpService {
     get<T>(url: string): Promise<HttpResponse<T>>;
     post<T, U>(url: string, data: U): Promise<HttpResponse<T>>;
@@ -46,4 +50,11 @@ export interface LocalStorageService {
     clear(): void;
     key(index: number): string | null;
     length: number;
+}
+
+export interface LoggerService {
+    debug(message: string, ...args: unknown[]): void;
+    info(message: string, ...args: unknown[]): void;
+    warn(message: string, ...args: unknown[]): void;
+    error(message: string, error?: unknown, ...args: unknown[]): void;
 }
