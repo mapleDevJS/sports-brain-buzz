@@ -31,7 +31,7 @@ type ShuffleOptions = {
  */
 export const shuffleArray = <T>(
     inputArray: readonly T[],
-    { maxLength }: Omit<ShuffleOptions, 'secure'> = {}
+    { maxLength }: Omit<ShuffleOptions, 'secure'> = {},
 ): T[] => {
     // Input validation
     if (!Array.isArray(inputArray)) {
@@ -47,7 +47,7 @@ export const shuffleArray = <T>(
 
     if (maxLength !== undefined && arrayLength > maxLength) {
         throw new RangeError(
-            `Array length ${arrayLength} exceeds maximum allowed length ${maxLength}`
+            `Array length ${arrayLength} exceeds maximum allowed length ${maxLength}`,
         );
     }
 

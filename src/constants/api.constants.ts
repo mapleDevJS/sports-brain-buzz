@@ -9,3 +9,6 @@ export const API_ENDPOINTS = {
     TOKEN: 'api_token.php',
     QUESTIONS: 'api.php',
 } as const;
+
+// Each IP can only access the API once every 5 seconds.
+export const API_RATE_LIMIT = 5000;

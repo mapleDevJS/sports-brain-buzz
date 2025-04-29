@@ -1,9 +1,17 @@
 import { ERROR_MESSAGE_BASE } from '../_lib/get-api-error-messages.ts';
-import { quizApiService } from '../_services/quiz-api.service.ts';
-import { localStorage } from '../_services/store/storageAdapter.ts';
-import { QuizStorageService } from './ports.ts';
+import { LocalStorageService, QuizApiService, QuizStorageService } from './ports.ts';
 
-export const fetchToken = async (quizStorage: QuizStorageService): Promise<void> => {
+type Dependencies = {
+    quizStorage: QuizStorageService;
+    localStorage: LocalStorageService;
+    quizApiService: QuizApiService;
+};
+
+export const fetchToken = async ({
+    quizStorage,
+    localStorage,
+    quizApiService,
+}: Dependencies): Promise<void> => {
     const { setFetchTokenError } = quizStorage;
     try {
         const { data } = await quizApiService.fetchToken();
