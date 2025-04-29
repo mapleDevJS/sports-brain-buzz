@@ -1,7 +1,8 @@
 import DOMPurify from 'dompurify';
 
 import { API_COMMANDS, API_ENDPOINTS, API_URL } from '../constants/api.constants';
-import { API_ERRORS, TokenUrlError } from './errors';
+import { API_ERRORS } from '../constants/errors.constants.ts';
+import { TokenUrlError } from '../types/errors-types.ts';
 import { createApiUrlWithErrorHandling } from './url';
 
 interface TokenValidationConfig {

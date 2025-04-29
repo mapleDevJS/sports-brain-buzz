@@ -37,7 +37,10 @@ export const fetchQuestions = async (
                 await startTrivia({ quizStorage, localStorage, quizApiService, loggerService });
                 break;
             case ResponseCode.RateLimit:
-                await startTrivia({ quizStorage, localStorage, quizApiService, loggerService }, API_RATE_LIMIT);
+                await startTrivia(
+                    { quizStorage, localStorage, quizApiService, loggerService },
+                    API_RATE_LIMIT,
+                );
                 break;
             default:
                 loggerService.error(getApiErrorMessage(responseCode));

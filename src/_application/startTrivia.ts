@@ -27,6 +27,11 @@ export const startTrivia = async (
     }
     const existingToken = localStorage.getItem('sessionToken');
     if (existingToken) {
-        await fetchQuestions(existingToken, { quizStorage, localStorage, quizApiService, loggerService });
+        await fetchQuestions(existingToken, {
+            quizStorage,
+            localStorage,
+            quizApiService,
+            loggerService,
+        });
     }
 };
