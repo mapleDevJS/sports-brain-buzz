@@ -1,21 +1,28 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { HttpClient } from './_application/ports.ts';
+// Core types and configuration
+import { HttpClient } from './_application/ports';
 import { createHttpService } from './_services/http.service';
-import { createDefaultHttpClient } from './_services/http-client.service.ts';
-import { createDefaultLogger, createLoggerService } from './_services/logger.service.ts';
+// Service factories
+import { createDefaultHttpClient } from './_services/http-client.service';
+import { createDefaultLogger, createLoggerService } from './_services/logger.service';
 import { createQuizApiService } from './_services/quiz-api.service';
+// Application contexts and components
 import { ServicesProvider } from './_services/store/services';
 import { Services } from './_services/store/services-context';
 import { Provider } from './_services/store/store';
 import App from './_ui/App';
-import { CONFIG } from './constants/config.constants.ts';
+import { CONFIG } from './constants/config.constants';
 
+/**
+ * Initialize all application services
+ * @returns Configured service instances
+ */
 const initializeServices = (): Services => {
     const defaultClient: HttpClient = createDefaultHttpClient();
-    const defaultLogger = createDefaultLogger();
-    const loggerService = createLoggerService(defaultLogger);
+    const logger = createDefaultLogger();
+    const loggerService = createLoggerService(logger);
     const httpService = createHttpService(defaultClient);
     const quizApiService = createQuizApiService(httpService);
 
@@ -25,8 +32,14 @@ const initializeServices = (): Services => {
     };
 };
 
+/**
+ * Render the React application with the provided services
+ * @param rootElement DOM element to mount the app
+ * @param services Application services
+ */
 const renderApp = (rootElement: HTMLElement, services: Services): void => {
     const root = createRoot(rootElement);
+
     root.render(
         <Provider>
             <React.StrictMode>
@@ -34,15 +47,31 @@ const renderApp = (rootElement: HTMLElement, services: Services): void => {
                     <App />
                 </ServicesProvider>
             </React.StrictMode>
-        </Provider>,
+        </Provider>
     );
 };
 
-const rootElement = document.getElementById(CONFIG.ROOT_ELEMENT_ID);
+/**
+ * Handle the case when a root element cannot be found
+ * @param elementId ID of the missing root element
+ */
+const handleMissingRootElement = (elementId: string): void => {
+    console.error(CONFIG.ERROR_MESSAGES.ROOT_NOT_FOUND(elementId));
+};
 
-if (rootElement) {
-    const services = initializeServices();
-    renderApp(rootElement, services);
-} else {
-    console.error(CONFIG.ERROR_MESSAGES.ROOT_NOT_FOUND(CONFIG.ROOT_ELEMENT_ID));
-}
+/**
+ * Bootstrap the application
+ */
+const bootstrapApplication = (): void => {
+    const rootElement = document.getElementById(CONFIG.ROOT_ELEMENT_ID);
+
+    if (rootElement) {
+        const services = initializeServices();
+        renderApp(rootElement, services);
+    } else {
+        handleMissingRootElement(CONFIG.ROOT_ELEMENT_ID);
+    }
+};
+
+// Start the application
+bootstrapApplication();
