@@ -2,17 +2,18 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 // Core types and configuration
-import { HttpClient } from './_application/ports';
-import { createHttpService } from './_services/http.service';
-// Service factories
-import { createDefaultHttpClient } from './_services/http-client.service';
-import { createDefaultLogger, createLoggerService } from './_services/logger.service';
-import { createQuizApiService } from './_services/quiz-api.service';
+import { HttpClient, Logger } from './_application/ports/ports.ts';
+import { createQuizApiService } from './_services/api/quiz-api.service.ts';
 // Application contexts and components
-import { ServicesProvider } from './_services/store/services';
-import { Services } from './_services/store/services-context';
-import { Provider } from './_services/store/store';
-import App from './_ui/App';
+import { ServicesProvider } from './_services/di/services.tsx';
+import { Services } from './_services/di/services-context.tsx';
+// Service factories
+import { createDefaultHttpClient } from './_services/http/http.client.ts';
+import { createHttpService } from './_services/http/http.service.ts';
+import { createLoggerService } from './_services/logger/logger.service.ts';
+import { createDefaultLogger } from './_services/logger/logger.ts';
+import { StorageProvider } from './_services/storage/quiz/quiz-store.tsx';
+import App from './_ui/components/App.tsx';
 import { CONFIG } from './constants/config.constants';
 
 /**
@@ -20,10 +21,12 @@ import { CONFIG } from './constants/config.constants';
  * @returns Configured service instances
  */
 const initializeServices = (): Services => {
-    const defaultClient: HttpClient = createDefaultHttpClient();
-    const logger = createDefaultLogger();
+    const logger: Logger = createDefaultLogger();
+    const httpClient: HttpClient = createDefaultHttpClient();
+
     const loggerService = createLoggerService(logger);
-    const httpService = createHttpService(defaultClient);
+
+    const httpService = createHttpService(httpClient);
     const quizApiService = createQuizApiService(httpService);
 
     return {
@@ -41,13 +44,13 @@ const renderApp = (rootElement: HTMLElement, services: Services): void => {
     const root = createRoot(rootElement);
 
     root.render(
-        <Provider>
+        <StorageProvider>
             <React.StrictMode>
                 <ServicesProvider services={services}>
                     <App />
                 </ServicesProvider>
             </React.StrictMode>
-        </Provider>
+        </StorageProvider>,
     );
 };
 

@@ -1,9 +1,9 @@
 import DOMPurify from 'dompurify';
 
-import { API_COMMANDS, API_ENDPOINTS, API_URL } from '../constants/api.constants';
+import { API_COMMANDS, API_ENDPOINTS, API_URL } from '../constants/api.constants.ts';
 import { API_ERRORS } from '../constants/errors.constants.ts';
 import { TokenUrlError } from '../types/errors-types.ts';
-import { createApiUrlWithErrorHandling } from './url';
+import { createApiUrlWithErrorHandling } from './url.ts';
 
 interface TokenValidationConfig {
     readonly minLength: number;

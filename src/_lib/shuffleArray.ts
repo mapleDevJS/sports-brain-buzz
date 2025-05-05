@@ -51,6 +51,6 @@ export const shuffleArray = <T>(
         );
     }
 
-    // Use radash's shuffle function which handles the actual shuffling
+    // Use radash's shuffle function, which handles the actual shuffling
     return shuffle(inputArray);
 };
