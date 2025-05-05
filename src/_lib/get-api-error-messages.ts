@@ -1,4 +1,4 @@
-import { ResponseCode } from '../types/response-code.enum';
+import { ResponseCode } from '../types/response-code.enum.ts';
 
 /**
  * Base error message for API failures

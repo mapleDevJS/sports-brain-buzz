@@ -1,3 +1,3 @@
-import { Question } from '../_domain/question.type.ts';
+import { QuestionEntity } from '../_domain/entities/question.entity.ts';
 
-export type QuestionsState = Question & { answers: string[] };
+export type QuizQuestion = QuestionEntity & { answers: string[] };

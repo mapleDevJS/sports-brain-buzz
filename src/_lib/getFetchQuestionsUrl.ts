@@ -1,10 +1,10 @@
 import DOMPurify from 'dompurify';
 
-import { API_URL, CATEGORY_ID } from '../constants/api.constants';
+import { API_URL, CATEGORY_ID } from '../constants/api.constants.ts';
 import { API_ERRORS } from '../constants/errors.constants.ts';
-import { Difficulty } from '../types/difficulty.enum';
+import { Difficulty } from '../types/difficulty.enum.ts';
 import { QuizApiError } from '../types/errors-types.ts';
-import { createApiUrlWithErrorHandling } from './url';
+import { createApiUrlWithErrorHandling } from './url.ts';
 
 interface ValidationConfig {
     readonly minAmount: number;
