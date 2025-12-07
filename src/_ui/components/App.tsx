@@ -5,25 +5,41 @@ import React, { lazy, MouseEvent, Suspense, useCallback, useMemo } from 'react';
 import { useCheckAnswer } from '../../_application/use-cases/useCheckAnswer';
 import { useNextQuestion } from '../../_application/use-cases/useNextQuestion';
 import { useStartTrivia } from '../../_application/use-cases/useStartTrivia';
+import { useUndoAnswer } from '../../_application/use-cases/useUndoAnswer';
 import { useQuizStorage } from '../../_services/storage/storageAdapters';
 import { TOTAL_QUESTIONS } from '../../constants/app.constants';
 import { GlobalStyle, Wrapper } from './App.styles';
+import { Confetti } from './Confetti';
 import ErrorMessage from './ErrorMessage';
+import { FocusTrap } from './FocusTrap';
 import Loading from './Loading';
 import NextButton from './NextButton';
+import { ProgressBar } from './ProgressBar';
+import { ReviewScreen } from './ReviewScreen';
 import Score from './Score';
+import { SkipToContent } from './SkipToContent';
 import StartButton from './StartButton';
+import UndoButton from './UndoButton';
 
 const MemoizedQuestionCard = lazy(() => import('./QuestionCard'));
 
 const App: React.FC = () => {
     const { state } = useQuizStorage();
-    const { gameOver, userAnswers, loading, questions, currentQuestionNumber, score, error } =
-        state;
+    const {
+        gameOver,
+        userAnswers,
+        loading,
+        questions,
+        currentQuestionNumber,
+        score,
+        error,
+        showReview,
+    } = state;
 
     const startTrivia = useStartTrivia();
     const checkAnswer = useCheckAnswer();
     const nextQuestion = useNextQuestion();
+    const undoAnswer = useUndoAnswer();
 
     // Handle the click event to start the trivia game
     const handleStartClick = useCallback(async () => {
@@ -65,41 +81,93 @@ const App: React.FC = () => {
         [gameOver, loading, userAnswers.length, currentQuestionNumber],
     );
 
+    // Determine whether to show the Undo button
+    const shouldShowUndoButton = useMemo(
+        () => !gameOver && !loading && userAnswers.length > 0 && currentQuestionNumber > 0,
+        [gameOver, loading, userAnswers.length, currentQuestionNumber],
+    );
+
+    // Check if perfect score
+    const isPerfectScore = useMemo(
+        () => gameOver && score === TOTAL_QUESTIONS,
+        [gameOver, score],
+    );
+
+    // Handle undo
+    const handleUndo = useCallback(() => {
+        undoAnswer();
+    }, [undoAnswer]);
+
     return (
         <>
             <GlobalStyle />
-            <Wrapper>
+            <SkipToContent />
+
+            {/* Show confetti for perfect score */}
+            {isPerfectScore && <Confetti />}
+
+            <Wrapper id="main-content" tabIndex={-1}>
                 <h1>SPORTS BRAIN BUZZ</h1>
 
                 {/* Display an error message at the top if there is any */}
                 {error && <ErrorMessage message={error} />}
 
-                {/* Conditional rendering for the Start button */}
-                {shouldShowStartButton && <StartButton onClick={handleStartClick} />}
-
-                {/* Display the score if the game is not over */}
-                {!gameOver && <Score score={score} />}
-
-                {/* Display loading spinner or the QuestionCard component */}
-                {loading ? (
-                    <Loading />
+                {/* Show review screen after quiz completion */}
+                {showReview && !loading ? (
+                    <ReviewScreen
+                        userAnswers={userAnswers}
+                        score={score}
+                        totalQuestions={TOTAL_QUESTIONS}
+                        onRestart={handleStartClick}
+                    />
                 ) : (
-                    shouldShowQuestionCard && (
-                        <Suspense fallback={<p>Loading...</p>}>
-                            <MemoizedQuestionCard
-                                questionNr={currentQuestionNumber + 1}
-                                totalQuestions={TOTAL_QUESTIONS}
-                                question={questions[currentQuestionNumber].question}
-                                answers={questions[currentQuestionNumber].answers}
-                                userAnswer={userAnswers[currentQuestionNumber] || undefined}
-                                onAnswerSelected={handleAnswerSelect}
-                            />
-                        </Suspense>
-                    )
-                )}
+                    <>
+                        {/* Conditional rendering for the Start button */}
+                        {shouldShowStartButton && <StartButton onClick={handleStartClick} />}
 
-                {/* Conditional rendering for the Next button */}
-                {shouldShowNextButton && <NextButton onClick={handleNextQuestionClick} />}
+                        {/* Display progress bar and score if the game is not over */}
+                        {!gameOver && questions.length > 0 && (
+                            <>
+                                <ProgressBar
+                                    current={currentQuestionNumber + 1}
+                                    total={TOTAL_QUESTIONS}
+                                />
+                                <Score score={score} />
+                            </>
+                        )}
+
+                        {/* Display loading spinner or the QuestionCard component */}
+                        <FocusTrap isActive={loading}>
+                            {loading ? (
+                                <Loading />
+                            ) : (
+                                shouldShowQuestionCard && (
+                                    <Suspense fallback={<p>Loading...</p>}>
+                                        <MemoizedQuestionCard
+                                            questionNr={currentQuestionNumber + 1}
+                                            totalQuestions={TOTAL_QUESTIONS}
+                                            question={questions[currentQuestionNumber].question}
+                                            answers={questions[currentQuestionNumber].answers}
+                                            userAnswer={
+                                                userAnswers[currentQuestionNumber] || undefined
+                                            }
+                                            onAnswerSelected={handleAnswerSelect}
+                                        />
+                                    </Suspense>
+                                )
+                            )}
+                        </FocusTrap>
+
+                        {/* Conditional rendering for the Undo and Next buttons */}
+                        {shouldShowUndoButton && (
+                            <UndoButton
+                                onClick={handleUndo}
+                                disabled={userAnswers.length !== currentQuestionNumber}
+                            />
+                        )}
+                        {shouldShowNextButton && <NextButton onClick={handleNextQuestionClick} />}
+                    </>
+                )}
             </Wrapper>
         </>
     );

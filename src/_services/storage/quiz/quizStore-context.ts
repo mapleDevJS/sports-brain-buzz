@@ -23,4 +23,7 @@ export const QuizStoreContext = createContext<QuizStorageService>({
     nextQuestion(): void {
         throw new Error('Method not implemented.');
     },
+    undoAnswer(): void {
+        throw new Error('Method not implemented.');
+    },
 });

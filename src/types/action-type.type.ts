@@ -9,4 +9,6 @@ export type ActionType =
           type: typeof ActionTypes.CHECK_ANSWER;
           payload: { userAnswer: string; expectedAnswer: string; userQuestion: string };
       }
-    | { type: typeof ActionTypes.SET_ERROR; payload: string };
+    | { type: typeof ActionTypes.SET_ERROR; payload: string }
+    | { type: typeof ActionTypes.UNDO_ANSWER }
+    | { type: typeof ActionTypes.SHOW_REVIEW };

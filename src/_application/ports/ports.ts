@@ -58,6 +58,7 @@ export interface QuizStorageService {
     setQuestions: (questionState: QuizQuestion[]) => void;
     checkAnswer: (answer: string, correctAnswer: string, question: string) => void;
     nextQuestion: () => void;
+    undoAnswer: () => void;
 }
 
 export interface LocalStorageService {

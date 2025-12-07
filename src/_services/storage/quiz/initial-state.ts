@@ -9,4 +9,5 @@ export const initialState: QuizState = {
     score: INITIAL_SCORE,
     gameOver: true,
     error: null,
+    showReview: false,
 };

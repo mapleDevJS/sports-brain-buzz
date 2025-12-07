@@ -9,4 +9,5 @@ export type QuizState = {
     score: number;
     gameOver: boolean;
     error: string | null;
+    showReview: boolean;
 };

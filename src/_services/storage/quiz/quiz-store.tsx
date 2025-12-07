@@ -38,6 +38,8 @@ export const StorageProvider: FC<ProviderProps> = ({ children }) => {
 
     const nextQuestion = () => dispatch({ type: ActionTypes.NEXT_QUESTION });
 
+    const undoAnswer = () => dispatch({ type: ActionTypes.UNDO_ANSWER });
+
     const value = useMemo(
         () => ({
             state,
@@ -47,6 +49,7 @@ export const StorageProvider: FC<ProviderProps> = ({ children }) => {
             setQuestions,
             checkAnswer,
             nextQuestion,
+            undoAnswer,
         }),
         [state],
     );
