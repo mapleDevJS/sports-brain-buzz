@@ -18,7 +18,7 @@
         "node": ">=20.15.0"
     },
     "scripts": {
-        "dev": "next dev",
+        "dev": "next dev --turbopack=false",
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
