@@ -16,7 +16,9 @@ describe('QuestionCard', () => {
 
     it('renders question number', () => {
         render(<QuestionCard {...mockProps} />);
-        expect(screen.getByText(/Question: 1 \/ 10/i)).toBeInTheDocument();
+        expect(screen.getByText(/Question:/i)).toBeInTheDocument();
+        expect(screen.getByText('1')).toBeInTheDocument();
+        expect(screen.getByText(/\/ 10/i)).toBeInTheDocument();
     });
 
     it('renders question text', () => {
