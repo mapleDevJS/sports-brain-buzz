@@ -14,7 +14,11 @@ import { createLoggerService } from './_services/logger/logger.service.ts';
 import { createDefaultLogger } from './_services/logger/logger.ts';
 import { StorageProvider } from './_services/storage/quiz/quiz-store.tsx';
 import App from './_ui/components/App.tsx';
+import { ErrorBoundary } from './_ui/components/ErrorBoundary.tsx';
 import { CONFIG } from './constants/config.constants';
+
+// Create logger at module level for bootstrap errors
+const bootstrapLogger = createLoggerService(createDefaultLogger());
 
 /**
  * Initialize all application services
@@ -47,7 +51,9 @@ const renderApp = (rootElement: HTMLElement, services: Services): void => {
         <StorageProvider>
             <React.StrictMode>
                 <ServicesProvider services={services}>
-                    <App />
+                    <ErrorBoundary loggerService={services.loggerService}>
+                        <App />
+                    </ErrorBoundary>
                 </ServicesProvider>
             </React.StrictMode>
         </StorageProvider>,
@@ -59,7 +65,7 @@ const renderApp = (rootElement: HTMLElement, services: Services): void => {
  * @param elementId ID of the missing root element
  */
 const handleMissingRootElement = (elementId: string): void => {
-    console.error(CONFIG.ERROR_MESSAGES.ROOT_NOT_FOUND(elementId));
+    bootstrapLogger.error(CONFIG.ERROR_MESSAGES.ROOT_NOT_FOUND(elementId));
 };
 
 /**

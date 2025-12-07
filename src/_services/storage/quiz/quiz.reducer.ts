@@ -7,7 +7,6 @@ import { ActionType } from '../../../types/action-type.type.ts';
 import { ActionTypes } from '../../../types/action-types.enum.ts';
 import { QuizQuestion } from '../../../types/question-state.type.ts';
 import { QuizState } from '../../../types/quiz-state.type.ts';
-// import { AnswerEntity } from '../../../_domain/entities/answer.entity.ts';
 
 // Define specific payload types
 type SubmitAnswerPayload = {

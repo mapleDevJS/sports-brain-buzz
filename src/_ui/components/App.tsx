@@ -47,10 +47,16 @@ const App: React.FC = () => {
         [gameOver, userAnswers.length],
     );
 
+    // Get the current question safely
+    const currentQuestion = useMemo(
+        () => questions[currentQuestionNumber],
+        [questions, currentQuestionNumber],
+    );
+
     // Determine whether to show the QuestionCard component
     const shouldShowQuestionCard = useMemo(
-        () => !loading && !gameOver && questions.length > 0,
-        [loading, gameOver, questions.length],
+        () => !loading && !gameOver && currentQuestion !== undefined,
+        [loading, gameOver, currentQuestion],
     );
 
     // Determine whether to show the Next button
@@ -82,13 +88,14 @@ const App: React.FC = () => {
                 {loading ? (
                     <Loading />
                 ) : (
-                    shouldShowQuestionCard && (
+                    shouldShowQuestionCard &&
+                    currentQuestion && (
                         <Suspense fallback={<p>Loading...</p>}>
                             <MemoizedQuestionCard
                                 questionNr={currentQuestionNumber + 1}
                                 totalQuestions={TOTAL_QUESTIONS}
-                                question={questions[currentQuestionNumber].question}
-                                answers={questions[currentQuestionNumber].answers}
+                                question={currentQuestion.question}
+                                answers={currentQuestion.answers}
                                 userAnswer={userAnswers[currentQuestionNumber] || undefined}
                                 onAnswerSelected={handleAnswerSelect}
                             />
