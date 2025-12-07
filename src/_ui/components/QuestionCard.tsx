@@ -31,9 +31,9 @@ const QuestionCard: React.FC<Props> = ({
         <QuestionNumber currentQuestionNumber={questionNr} totalQuestionCount={totalQuestions} />
         <QuestionText question={question} />
         <div>
-            {answers.map((answer) => (
+            {answers.map((answer, index) => (
                 <AnswerButton
-                    key={answer}
+                    key={`answer-${index}-${answer.substring(0, 20)}`}
                     answer={answer}
                     userAnswer={userAnswer}
                     onClick={onAnswerSelected}

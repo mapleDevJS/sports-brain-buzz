@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { AnswerEntity } from '../../_domain/entities/answer.entity';
+import { sanitizeHtmlContent } from '../../_lib/sanitizeHtmlContent';
 import { ButtonWrapper } from './QuestionCard.styles';
 
 type Props = {
@@ -20,14 +21,12 @@ export const AnswerButton: React.FC<Props> = ({ answer, userAnswer, onClick }) =
         onClick,
     };
 
+    const sanitizedAnswer = sanitizeHtmlContent(answer);
+
     return (
-        <ButtonWrapper
-            key={answer}
-            correct={expectedAnswer === answer}
-            userClicked={userClickedAnswer === answer}
-        >
+        <ButtonWrapper correct={expectedAnswer === answer} userClicked={userClickedAnswer === answer}>
             <button {...buttonProps}>
-                <span dangerouslySetInnerHTML={{ __html: answer }} />
+                <span dangerouslySetInnerHTML={sanitizedAnswer} />
             </button>
         </ButtonWrapper>
     );

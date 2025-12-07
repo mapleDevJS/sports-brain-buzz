@@ -5,7 +5,7 @@ type NextButtonProps = {
 };
 
 const NextButton: React.FC<NextButtonProps> = ({ onClick }) => (
-    <button className="next" onClick={onClick}>
+    <button className="next" onClick={onClick} type="button" aria-label="Go to next question">
         Next Question
     </button>
 );

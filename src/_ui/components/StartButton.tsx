@@ -7,7 +7,7 @@ type StartButtonProps = {
 const BUTTON_TEXT = 'Start';
 
 const StartButton: React.FC<StartButtonProps> = ({ onClick }) => (
-    <button className="start" onClick={onClick}>
+    <button className="start" onClick={onClick} type="button" aria-label="Start the sports quiz">
         {BUTTON_TEXT}
     </button>
 );

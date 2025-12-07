@@ -5,7 +5,9 @@ type ErrorMessageProps = {
 };
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => (
-    <p className="error">{message}</p>
+    <p className="error" role="alert" aria-live="polite">
+        {message}
+    </p>
 );
 
 export default ErrorMessage;
