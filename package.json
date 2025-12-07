@@ -25,11 +25,14 @@
         "lint:fix": "eslint . --ext ts,tsx --fix",
         "format": "prettier --write .",
         "clean": "rimraf .next",
-        "type:check": "tsc --noEmit"
+        "type:check": "tsc --noEmit",
+        "test": "vitest",
+        "test:ui": "vitest --ui",
+        "test:coverage": "vitest --coverage",
+        "test:run": "vitest run"
     },
     "dependencies": {
         "dompurify": "^3.2.5",
-        "http-errors": "^2.0.0",
         "ky": "^1.8.1",
         "next": "^16.0.0",
         "pino": "^9.6.0",
@@ -41,8 +44,10 @@
         "url-join": "^5.0.0"
     },
     "devDependencies": {
+        "@testing-library/jest-dom": "^6.9.1",
+        "@testing-library/react": "^16.3.0",
+        "@testing-library/user-event": "^14.6.1",
         "@types/dompurify": "^3.2.0",
-        "@types/http-errors": "^2.0.4",
         "@types/node": "^22.10.2",
         "@types/react": "^19.0.2",
         "@types/react-dom": "^19.0.2",
@@ -50,6 +55,9 @@
         "@types/url-join": "^4.0.3",
         "@typescript-eslint/eslint-plugin": "^8.18.2",
         "@typescript-eslint/parser": "^8.18.2",
+        "@vitejs/plugin-react": "^5.1.1",
+        "@vitest/coverage-v8": "^4.0.15",
+        "@vitest/ui": "^4.0.15",
         "eslint": "^9.17.0",
         "eslint-config-next": "^16.0.0",
         "eslint-config-prettier": "^9.1.0",
@@ -58,8 +66,11 @@
         "eslint-plugin-react": "^7.34.3",
         "eslint-plugin-react-hooks": "^5.1.0",
         "eslint-plugin-simple-import-sort": "^12.1.1",
+        "happy-dom": "^20.0.11",
+        "jsdom": "^27.2.0",
         "prettier": "^3.3.2",
         "rimraf": "^5.0.0",
-        "typescript": "^5.4.5"
+        "typescript": "^5.4.5",
+        "vitest": "^4.0.15"
     }
 }

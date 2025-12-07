@@ -13,13 +13,22 @@ export const useCheckAnswer = () => {
         (answer: string): void => {
             const { state, checkAnswer: checkAnswerStorage } = quizStorage;
 
-            // If the game is over, don't process the answer
             if (state.gameOver) return;
 
-            // Get the current question from the quiz state
-            const currentQuestion = state.questions[state.currentQuestionNumber];
+            const { currentQuestionNumber, questions } = state;
 
-            // Call the storage service to check the answer
+            if (currentQuestionNumber < 0 || currentQuestionNumber >= questions.length) {
+                console.error(`Invalid question number: ${currentQuestionNumber}`);
+                return;
+            }
+
+            const currentQuestion = questions[currentQuestionNumber];
+
+            if (!currentQuestion) {
+                console.error(`Question not found at index: ${currentQuestionNumber}`);
+                return;
+            }
+
             checkAnswerStorage(answer, currentQuestion.correct_answer, currentQuestion.question);
         },
         [quizStorage],

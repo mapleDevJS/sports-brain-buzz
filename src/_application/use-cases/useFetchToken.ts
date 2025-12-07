@@ -8,7 +8,7 @@ const SESSION_TOKEN_KEY = 'sessionToken';
 const TOKEN_ERROR_MESSAGE = `${ERROR_MESSAGE_BASE} Please try again.`;
 
 export const useFetchToken = () => {
-    const { quizApiService } = useServices();
+    const { quizApiService, loggerService } = useServices();
     const { setFetchTokenError } = useQuizStorage();
     const localStorage = useLocalStorage();
 
@@ -17,9 +17,15 @@ export const useFetchToken = () => {
             const {
                 data: { token },
             } = await quizApiService.fetchToken();
+
+            if (!token) {
+                throw new Error('Token is empty');
+            }
+
             localStorage.setItem(SESSION_TOKEN_KEY, token);
         } catch (error) {
+            loggerService.error('Failed to fetch token:', error);
             setFetchTokenError(TOKEN_ERROR_MESSAGE);
         }
-    }, [quizApiService, localStorage, setFetchTokenError]);
+    }, [quizApiService, localStorage, setFetchTokenError, loggerService]);
 };

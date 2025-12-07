@@ -1,6 +1,7 @@
-import createError from 'http-errors';
 import queryString from 'query-string';
 import urljoin from 'url-join';
+
+import { ApiError } from './errors';
 
 export interface ApiUrlOptions {
     command?: string;
@@ -13,7 +14,7 @@ export const createApiUrl = (
     options: ApiUrlOptions = {},
 ): URL => {
     if (!baseUrl?.trim()) {
-        throw createError(500, 'Missing API URL');
+        throw ApiError.internalServer('Missing API URL');
     }
 
     const cleanBaseUrl = baseUrl.trim();
@@ -30,8 +31,7 @@ export const createApiUrlWithErrorHandling = (urlCreator: () => string): string 
     try {
         return urlCreator();
     } catch (error) {
-        throw createError(
-            500,
+        throw ApiError.internalServer(
             `URL creation failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
         );
     }

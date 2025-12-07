@@ -24,7 +24,10 @@ export const AnswerButton: React.FC<Props> = ({ answer, userAnswer, onClick }) =
     const sanitizedAnswer = sanitizeHtmlContent(answer);
 
     return (
-        <ButtonWrapper correct={expectedAnswer === answer} userClicked={userClickedAnswer === answer}>
+        <ButtonWrapper
+            $correct={expectedAnswer === answer}
+            $userClicked={userClickedAnswer === answer}
+        >
             <button {...buttonProps}>
                 <span dangerouslySetInnerHTML={sanitizedAnswer} />
             </button>
