@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { AnswerEntity } from '../../_domain/entities/answer.entity.ts';
-import { ButtonWrapper } from './QuestionCard.styles.ts';
+import { AnswerEntity } from '../../_domain/entities/answer.entity';
+import { ButtonWrapper } from './QuestionCard.styles';
 
 type Props = {
     answer: string;

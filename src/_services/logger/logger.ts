@@ -1,3 +1,3 @@
-import { createPinoLogger } from './pino.logger.ts';
+import { createConsoleLogger } from './console.logger';
 
-export const createDefaultLogger = () => createPinoLogger();
+export const createDefaultLogger = () => createConsoleLogger();

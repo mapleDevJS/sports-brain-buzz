@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { useQuizStorage } from '../../_services/storage/storageAdapters.ts';
+import { useQuizStorage } from '../../_services/storage/storageAdapters';
 
 /**
  * Hook for checking user's answer against the correct answer

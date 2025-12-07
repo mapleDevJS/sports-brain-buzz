@@ -1,8 +1,8 @@
-import { QuestionEntity } from '../../_domain/entities/question.entity.ts';
-import { Difficulty } from '../../types/difficulty.enum.ts';
-import { QuizQuestion } from '../../types/question-state.type.ts';
-import { QuizState } from '../../types/quiz-state.type.ts';
-import { ResponseCode } from '../../types/response-code.enum.ts';
+import { QuestionEntity } from '../../_domain/entities/question.entity';
+import { Difficulty } from '../../types/difficulty.enum';
+import { QuizQuestion } from '../../types/question-state.type';
+import { QuizState } from '../../types/quiz-state.type';
+import { ResponseCode } from '../../types/response-code.enum';
 
 export interface ResponseRdo {
     response_code: ResponseCode;

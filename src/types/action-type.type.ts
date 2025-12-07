@@ -1,5 +1,5 @@
-import { ActionTypes } from './action-types.enum.ts';
-import { QuizQuestion } from './question-state.type.ts';
+import { ActionTypes } from './action-types.enum';
+import { QuizQuestion } from './question-state.type';
 
 export type ActionType =
     | { type: typeof ActionTypes.START_QUIZ }

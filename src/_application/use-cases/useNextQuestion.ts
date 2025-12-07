@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { useQuizStorage } from '../../_services/storage/storageAdapters.ts';
+import { useQuizStorage } from '../../_services/storage/storageAdapters';
 
 export const useNextQuestion = (): (() => void) => {
     const quizStorage = useQuizStorage();

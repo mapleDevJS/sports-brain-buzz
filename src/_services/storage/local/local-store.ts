@@ -1,4 +1,4 @@
-import { LocalStorageService } from '../../../_application/ports/ports.ts';
+import { LocalStorageService } from '../../../_application/ports/ports';
 
 export const localStore = (): LocalStorageService => ({
     getItem: (key: TokenKey) => {

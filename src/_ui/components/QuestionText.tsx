@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { sanitizeHtmlContent } from '../../_lib/sanitizeHtmlContent.ts';
+import { sanitizeHtmlContent } from '../../_lib/sanitizeHtmlContent';
 
 interface SanitizedQuestionProps {
     question: string;

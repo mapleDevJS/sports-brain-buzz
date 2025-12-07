@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 
-import { transformToQuestionState } from '../../_domain/mappers/question.mapper.ts';
-import { getApiErrorMessage } from '../../_lib/get-api-error-messages.ts';
-import { useServices } from '../../_services/di/useServices.ts';
-import { useLocalStorage, useQuizStorage } from '../../_services/storage/storageAdapters.ts';
-import { API_RATE_LIMIT } from '../../constants/api.constants.ts';
-import { TOTAL_QUESTIONS } from '../../constants/app.constants.ts';
-import { Difficulty } from '../../types/difficulty.enum.ts';
-import { ResponseCode } from '../../types/response-code.enum.ts';
-import { QuestionRdo } from '../ports/ports.ts';
+import { transformToQuestionState } from '../../_domain/mappers/question.mapper';
+import { getApiErrorMessage } from '../../_lib/get-api-error-messages';
+import { useServices } from '../../_services/di/useServices';
+import { useLocalStorage, useQuizStorage } from '../../_services/storage/storageAdapters';
+import { API_RATE_LIMIT } from '../../constants/api.constants';
+import { TOTAL_QUESTIONS } from '../../constants/app.constants';
+import { Difficulty } from '../../types/difficulty.enum';
+import { ResponseCode } from '../../types/response-code.enum';
+import { QuestionRdo } from '../ports/ports';
 
 const FETCH_ERROR_MESSAGE = 'Failed to fetch quiz questions. Please try again.';
 const SESSION_TOKEN_KEY = 'sessionToken';

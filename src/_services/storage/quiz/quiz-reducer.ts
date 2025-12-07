@@ -2,12 +2,12 @@ import {
     INITIAL_QUESTION_NUMBER,
     INITIAL_SCORE,
     TOTAL_QUESTIONS,
-} from '../../../constants/app.constants.ts';
-import { ActionType } from '../../../types/action-type.type.ts';
-import { ActionTypes } from '../../../types/action-types.enum.ts';
-import { QuizQuestion } from '../../../types/question-state.type.ts';
-import { QuizState } from '../../../types/quiz-state.type.ts';
-// import { AnswerEntity } from '../../../_domain/entities/answer.entity.ts';
+} from '../../../constants/app.constants';
+import { ActionType } from '../../../types/action-type.type';
+import { ActionTypes } from '../../../types/action-types.enum';
+import { QuizQuestion } from '../../../types/question-state.type';
+import { QuizState } from '../../../types/quiz-state.type';
+// import { AnswerEntity } from '../../../_domain/entities/answer.entity';
 
 // Define specific payload types
 type SubmitAnswerPayload = {

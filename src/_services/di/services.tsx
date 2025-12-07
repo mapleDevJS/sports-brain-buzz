@@ -1,6 +1,8 @@
+'use client';
+
 import { FC, ReactNode } from 'react';
 
-import { Services, ServicesContext } from './services-context.tsx';
+import { Services, ServicesContext } from './services-context';
 
 interface ProviderProps {
     services: Services;

@@ -1,6 +1,6 @@
 import { sleep } from 'radash';
 
-import { LocalStorageService, QuizStorageService } from '../ports/ports.ts';
+import { LocalStorageService, QuizStorageService } from '../ports/ports';
 
 export type TriviaServiceDependencies = {
     quizStorage: QuizStorageService;

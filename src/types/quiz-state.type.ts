@@ -1,5 +1,5 @@
-import { AnswerEntity } from '../_domain/entities/answer.entity.ts';
-import { QuizQuestion } from './question-state.type.ts';
+import { AnswerEntity } from '../_domain/entities/answer.entity';
+import { QuizQuestion } from './question-state.type';
 
 export type QuizState = {
     loading: boolean;

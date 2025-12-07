@@ -1,10 +1,12 @@
+'use client';
+
 import { FC, ReactNode, useMemo, useReducer } from 'react';
 
-import { ActionTypes } from '../../../types/action-types.enum.ts';
-import { QuizQuestion } from '../../../types/question-state.type.ts';
-import { initialState } from './initial-state.ts';
-import { quizReducer } from './quiz-reducer.ts';
-import { QuizStoreContext } from './quizStore-context.ts';
+import { ActionTypes } from '../../../types/action-types.enum';
+import { QuizQuestion } from '../../../types/question-state.type';
+import { initialState } from './initial-state';
+import { quizReducer } from './quiz-reducer';
+import { QuizStoreContext } from './quizStore-context';
 
 interface ProviderProps {
     children: ReactNode;

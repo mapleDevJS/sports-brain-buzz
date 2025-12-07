@@ -1,4 +1,4 @@
-import { shuffleArray } from '../../_lib/shuffleArray.ts';
+import { shuffleArray } from '../../_lib/shuffleArray';
 import { QuizQuestion } from '../../types/question-state.type';
 import { QuestionEntity } from '../entities/question.entity';
 

@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 
-import { useLocalStorage, useQuizStorage } from '../../_services/storage/storageAdapters.ts';
-import { startTrivia, TriviaServiceDependencies } from './startTrivia.ts';
-import { useFetchQuestions } from './useFetchQuestions.ts';
-import { useFetchToken } from './useFetchToken.ts';
+import { useLocalStorage, useQuizStorage } from '../../_services/storage/storageAdapters';
+import { startTrivia, TriviaServiceDependencies } from './startTrivia';
+import { useFetchQuestions } from './useFetchQuestions';
+import { useFetchToken } from './useFetchToken';
 
 export const useStartTrivia = () => {
     const quizStorage = useQuizStorage();

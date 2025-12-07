@@ -1,5 +1,5 @@
-import { INITIAL_QUESTION_NUMBER, INITIAL_SCORE } from '../../../constants/app.constants.ts';
-import { QuizState } from '../../../types/quiz-state.type.ts';
+import { INITIAL_QUESTION_NUMBER, INITIAL_SCORE } from '../../../constants/app.constants';
+import { QuizState } from '../../../types/quiz-state.type';
 
 export const initialState: QuizState = {
     loading: false,

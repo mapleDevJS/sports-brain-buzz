@@ -4,11 +4,11 @@ import {
     QuizApiService,
     ResetTokenRdo,
     TokenRdo,
-} from '../../_application/ports/ports.ts';
-import { getFetchQuestionsUrl } from '../../_lib/getFetchQuestionsUrl.ts';
-import { getFetchTokenUrl } from '../../_lib/getFetchTokenUrl.ts';
-import { getResetTokenUrl } from '../../_lib/getResetTokenUrl.ts';
-import { Difficulty } from '../../types/difficulty.enum.ts';
+} from '../../_application/ports/ports';
+import { getFetchQuestionsUrl } from '../../_lib/getFetchQuestionsUrl';
+import { getFetchTokenUrl } from '../../_lib/getFetchTokenUrl';
+import { getResetTokenUrl } from '../../_lib/getResetTokenUrl';
+import { Difficulty } from '../../types/difficulty.enum';
 
 export const createQuizApiService = (httpService: HttpService): QuizApiService => ({
     fetchQuestions: async (amount: number, difficulty: Difficulty, token: string) => {

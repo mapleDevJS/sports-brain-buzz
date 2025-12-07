@@ -1,6 +1,6 @@
-import styled, { createGlobalStyle, keyframes } from 'styled-components';
+'use client';
 
-import BGImage from '../../images/nattu-adnan-unsplash.jpg';
+import styled, { createGlobalStyle, keyframes } from 'styled-components';
 
 // Define constants and theme colors together
 const theme = {
@@ -45,7 +45,7 @@ export const GlobalStyle = createGlobalStyle`
         height: 100%;
     }
     body {
-        background-image: url(${BGImage});
+        background-image: url('/images/nattu-adnan-unsplash.jpg');
         background-size: cover;
         margin: 0;
         padding: 0 20px;

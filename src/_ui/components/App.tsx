@@ -1,18 +1,20 @@
+'use client';
+
 import React, { lazy, MouseEvent, Suspense, useCallback, useMemo } from 'react';
 
-import { useCheckAnswer } from '../../_application/use-cases/useCheckAnswer.ts';
-import { useNextQuestion } from '../../_application/use-cases/useNextQuestion.ts';
-import { useStartTrivia } from '../../_application/use-cases/useStartTrivia.ts';
-import { useQuizStorage } from '../../_services/storage/storageAdapters.ts';
-import { TOTAL_QUESTIONS } from '../../constants/app.constants.ts';
-import { GlobalStyle, Wrapper } from './App.styles.ts';
-import ErrorMessage from './ErrorMessage.tsx';
-import Loading from './Loading.tsx';
-import NextButton from './NextButton.tsx';
-import Score from './Score.tsx';
-import StartButton from './StartButton.tsx';
+import { useCheckAnswer } from '../../_application/use-cases/useCheckAnswer';
+import { useNextQuestion } from '../../_application/use-cases/useNextQuestion';
+import { useStartTrivia } from '../../_application/use-cases/useStartTrivia';
+import { useQuizStorage } from '../../_services/storage/storageAdapters';
+import { TOTAL_QUESTIONS } from '../../constants/app.constants';
+import { GlobalStyle, Wrapper } from './App.styles';
+import ErrorMessage from './ErrorMessage';
+import Loading from './Loading';
+import NextButton from './NextButton';
+import Score from './Score';
+import StartButton from './StartButton';
 
-const MemoizedQuestionCard = lazy(() => import('./QuestionCard.tsx'));
+const MemoizedQuestionCard = lazy(() => import('./QuestionCard'));
 
 const App: React.FC = () => {
     const { state } = useQuizStorage();

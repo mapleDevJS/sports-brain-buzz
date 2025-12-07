@@ -1,4 +1,4 @@
-import { Logger, LoggerService } from '../../_application/ports/ports.ts';
+import { Logger, LoggerService } from '../../_application/ports/ports';
 
 export const createLoggerService = (logger: Logger): LoggerService => ({
     debug(message: string, ...args: unknown[]): void {

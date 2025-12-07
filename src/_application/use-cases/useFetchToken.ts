@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 
-import { ERROR_MESSAGE_BASE } from '../../_lib/get-api-error-messages.ts';
-import { useServices } from '../../_services/di/useServices.ts';
-import { useLocalStorage, useQuizStorage } from '../../_services/storage/storageAdapters.ts';
+import { ERROR_MESSAGE_BASE } from '../../_lib/get-api-error-messages';
+import { useServices } from '../../_services/di/useServices';
+import { useLocalStorage, useQuizStorage } from '../../_services/storage/storageAdapters';
 
 const SESSION_TOKEN_KEY = 'sessionToken';
 const TOKEN_ERROR_MESSAGE = `${ERROR_MESSAGE_BASE} Please try again.`;

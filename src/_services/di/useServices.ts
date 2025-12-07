@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { Services, ServicesContext } from './services-context.tsx';
+import { Services, ServicesContext } from './services-context';
 
 /**
  * Custom hook to access application services from context

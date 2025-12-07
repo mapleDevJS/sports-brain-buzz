@@ -1,6 +1,6 @@
 import ky from 'ky';
 
-import { HttpClient } from '../../_application/ports/ports.ts';
+import { HttpClient } from '../../_application/ports/ports';
 
 export const createKyClient =
     (): HttpClient['fetch'] =>

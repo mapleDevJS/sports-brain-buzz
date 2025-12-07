@@ -1,4 +1,4 @@
-import { HttpClient, HttpService } from '../../_application/ports/ports.ts';
+import { HttpClient, HttpService } from '../../_application/ports/ports';
 
 const HEADERS = {
     BASE: {

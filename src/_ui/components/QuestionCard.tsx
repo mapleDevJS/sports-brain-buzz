@@ -1,12 +1,14 @@
+'use client';
+
 import React from 'react';
 
 // Types
-import { AnswerEntity } from '../../_domain/entities/answer.entity.ts';
-import { AnswerButton } from './AnswerButton.tsx';
+import { AnswerEntity } from '../../_domain/entities/answer.entity';
+import { AnswerButton } from './AnswerButton';
 // Styles
-import { Wrapper } from './QuestionCard.styles.ts';
-import { QuestionNumber } from './QuestionNumber.tsx';
-import { QuestionText } from './QuestionText.tsx';
+import { Wrapper } from './QuestionCard.styles';
+import { QuestionNumber } from './QuestionNumber';
+import { QuestionText } from './QuestionText';
 
 type Props = {
     question: string;

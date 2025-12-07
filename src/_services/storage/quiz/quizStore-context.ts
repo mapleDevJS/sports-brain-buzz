@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-import { QuizStorageService } from '../../../_application/ports/ports.ts';
-import { initialState } from './initial-state.ts';
+import { QuizStorageService } from '../../../_application/ports/ports';
+import { initialState } from './initial-state';
 
 export const QuizStoreContext = createContext<QuizStorageService>({
     state: initialState,
