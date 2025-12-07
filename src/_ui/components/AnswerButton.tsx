@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 
 import { AnswerEntity } from '../../_domain/entities/answer.entity';
 import { sanitizeHtmlContent } from '../../_lib/sanitizeHtmlContent';
@@ -12,25 +12,30 @@ type Props = {
 
 const isButtonDisabled = (userAnswer: AnswerEntity | undefined): boolean => !!userAnswer;
 
-export const AnswerButton: React.FC<Props> = ({ answer, userAnswer, onClick }) => {
+const AnswerButtonComponent: React.FC<Props> = ({ answer, userAnswer, onClick }) => {
     const { expectedAnswer, userAnswer: userClickedAnswer } = userAnswer || {};
 
-    const buttonProps = {
-        disabled: isButtonDisabled(userAnswer),
-        value: answer,
-        onClick,
-    };
+    const buttonProps = useMemo(
+        () => ({
+            disabled: isButtonDisabled(userAnswer),
+            value: answer,
+            onClick,
+        }),
+        [userAnswer, answer, onClick],
+    );
 
-    const sanitizedAnswer = sanitizeHtmlContent(answer);
+    const sanitizedAnswer = useMemo(() => sanitizeHtmlContent(answer), [answer]);
+
+    const isCorrect = expectedAnswer === answer;
+    const isClicked = userClickedAnswer === answer;
 
     return (
-        <ButtonWrapper
-            $correct={expectedAnswer === answer}
-            $userClicked={userClickedAnswer === answer}
-        >
+        <ButtonWrapper $correct={isCorrect} $userClicked={isClicked}>
             <button {...buttonProps}>
                 <span dangerouslySetInnerHTML={sanitizedAnswer} />
             </button>
         </ButtonWrapper>
     );
 };
+
+export const AnswerButton = memo(AnswerButtonComponent);

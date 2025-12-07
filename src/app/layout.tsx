@@ -1,6 +1,21 @@
 import type { Metadata } from 'next';
+import { Catamaran, Fascinate_Inline } from 'next/font/google';
 import StyledComponentsRegistry from './registry';
 import { Providers } from './providers';
+
+const catamaran = Catamaran({
+    weight: '700',
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-catamaran',
+});
+
+const fascinateInline = Fascinate_Inline({
+    weight: '400',
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-fascinate',
+});
 
 export const metadata: Metadata = {
     title: 'Sports Brain Buzz',
@@ -9,15 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en">
-            <head>
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Catamaran:wght@700&family=Fascinate+Inline&display=swap"
-                    rel="stylesheet"
-                />
-            </head>
+        <html lang="en" className={`${catamaran.variable} ${fascinateInline.variable}`}>
             <body>
                 <StyledComponentsRegistry>
                     <Providers>{children}</Providers>

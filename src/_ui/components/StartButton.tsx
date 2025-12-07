@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 type StartButtonProps = {
     onClick: () => void;
@@ -12,4 +12,4 @@ const StartButton: React.FC<StartButtonProps> = ({ onClick }) => (
     </button>
 );
 
-export default StartButton;
+export default memo(StartButton);

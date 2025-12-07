@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 
 import { HttpClient, Logger } from '../_application/ports/ports';
+import { WebVitals } from '../_lib/web-vitals';
 import { createQuizApiService } from '../_services/api/quiz-api.service';
 import { Services } from '../_services/di/services-context';
 import { ServicesProvider } from '../_services/di/services';
@@ -32,7 +33,10 @@ const services = initializeServices();
 export function Providers({ children }: { children: ReactNode }) {
     return (
         <StorageProvider>
-            <ServicesProvider services={services}>{children}</ServicesProvider>
+            <ServicesProvider services={services}>
+                <WebVitals />
+                {children}
+            </ServicesProvider>
         </StorageProvider>
     );
 }

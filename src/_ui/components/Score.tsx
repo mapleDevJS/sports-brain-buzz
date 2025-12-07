@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 type ScoreProps = {
     score: number;
@@ -6,4 +6,4 @@ type ScoreProps = {
 
 const Score: React.FC<ScoreProps> = ({ score }) => <p className="score">Score: {score}</p>;
 
-export default Score;
+export default memo(Score);

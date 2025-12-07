@@ -5,8 +5,8 @@ import styled, { createGlobalStyle, keyframes } from 'styled-components';
 // Define constants and theme colors together
 const theme = {
     fontFamily: {
-        catamaran: "'Catamaran', sans-serif",
-        fascinate: "'Fascinate Inline', sans-serif",
+        catamaran: "var(--font-catamaran, 'Catamaran', sans-serif)",
+        fascinate: "var(--font-fascinate, 'Fascinate Inline', sans-serif)",
     },
     colors: {
         white: '#fff',
@@ -47,12 +47,21 @@ export const GlobalStyle = createGlobalStyle`
     body {
         background-image: url('/images/nattu-adnan-unsplash.jpg');
         background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         margin: 0;
         padding: 0 20px;
         display: flex;
         justify-content: center;
         align-items: center;
         animation: ${fadeIn} 1s ease-in-out;
+        will-change: transform;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        body {
+            animation: none;
+        }
     }
     *, *::before, *::after {
         box-sizing: border-box;
