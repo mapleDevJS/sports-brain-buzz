@@ -61,8 +61,8 @@ const App: React.FC = () => {
 
     // Determine whether to show the Start button
     const shouldShowStartButton = useMemo(
-        () => gameOver || userAnswers.length === TOTAL_QUESTIONS,
-        [gameOver, userAnswers.length],
+        () => (gameOver && !showReview) || (gameOver && error !== null),
+        [gameOver, showReview, error],
     );
 
     // Determine whether to show the QuestionCard component
@@ -83,7 +83,11 @@ const App: React.FC = () => {
 
     // Determine whether to show the Undo button
     const shouldShowUndoButton = useMemo(
-        () => !gameOver && !loading && userAnswers.length > 0 && currentQuestionNumber > 0,
+        () =>
+            !gameOver &&
+            !loading &&
+            userAnswers.length > 0 &&
+            userAnswers.length === currentQuestionNumber + 1,
         [gameOver, loading, userAnswers.length, currentQuestionNumber],
     );
 
@@ -142,7 +146,7 @@ const App: React.FC = () => {
                                 <Loading />
                             ) : (
                                 shouldShowQuestionCard && (
-                                    <Suspense fallback={<p>Loading...</p>}>
+                                    <Suspense fallback={<Loading />}>
                                         <MemoizedQuestionCard
                                             questionNr={currentQuestionNumber + 1}
                                             totalQuestions={TOTAL_QUESTIONS}
@@ -159,13 +163,25 @@ const App: React.FC = () => {
                         </FocusTrap>
 
                         {/* Conditional rendering for the Undo and Next buttons */}
-                        {shouldShowUndoButton && (
-                            <UndoButton
-                                onClick={handleUndo}
-                                disabled={userAnswers.length !== currentQuestionNumber}
-                            />
+                        {(shouldShowUndoButton || shouldShowNextButton) && (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    gap: '1rem',
+                                    flexWrap: 'wrap',
+                                    justifyContent: 'center',
+                                    width: '100%',
+                                    marginTop: '1rem',
+                                }}
+                            >
+                                {shouldShowUndoButton && (
+                                    <UndoButton onClick={handleUndo} disabled={false} />
+                                )}
+                                {shouldShowNextButton && (
+                                    <NextButton onClick={handleNextQuestionClick} />
+                                )}
+                            </div>
                         )}
-                        {shouldShowNextButton && <NextButton onClick={handleNextQuestionClick} />}
                     </>
                 )}
             </Wrapper>
