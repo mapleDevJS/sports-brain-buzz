@@ -55,6 +55,119 @@ const ScoreSummary = styled.p`
     font-weight: 500;
 `;
 
+const EvaluationPanel = styled.div`
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 149, 255, 0.1) 100%);
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+`;
+
+const EvaluationTitle = styled.h3`
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #00d4ff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 0.5px;
+`;
+
+const StatsGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+`;
+
+const StatCard = styled.div`
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        border-color: rgba(0, 212, 255, 0.3);
+        box-shadow: 0 8px 16px rgba(0, 212, 255, 0.15);
+    }
+`;
+
+const StatValue = styled.div<{ $color?: string }>`
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: ${(props) => props.$color || '#00d4ff'};
+    margin-bottom: 0.5rem;
+    line-height: 1;
+`;
+
+const StatLabel = styled.div`
+    font-size: 0.875rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+`;
+
+const PerformanceRating = styled.div<{ $rating: string }>`
+    text-align: center;
+    padding: 1.5rem;
+    background: ${(props) => {
+        switch (props.$rating) {
+            case 'Excellent':
+                return 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)';
+            case 'Good':
+                return 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%)';
+            case 'Fair':
+                return 'linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(251, 191, 36, 0.1) 100%)';
+            default:
+                return 'linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%)';
+        }
+    }};
+    border: 2px solid
+        ${(props) => {
+            switch (props.$rating) {
+                case 'Excellent':
+                    return 'rgba(16, 185, 129, 0.4)';
+                case 'Good':
+                    return 'rgba(59, 130, 246, 0.4)';
+                case 'Fair':
+                    return 'rgba(251, 191, 36, 0.4)';
+                default:
+                    return 'rgba(239, 68, 68, 0.4)';
+            }
+        }};
+    border-radius: 12px;
+    margin-top: 1.5rem;
+`;
+
+const RatingLabel = styled.div`
+    font-size: 0.875rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+`;
+
+const RatingValue = styled.div<{ $color: string }>`
+    font-size: 2rem;
+    font-weight: 800;
+    color: ${(props) => props.$color};
+    letter-spacing: 1px;
+`;
+
+const ReviewTitle = styled.h3`
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin: 2rem 0 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+`;
+
 const QuestionItem = styled.div<{ $isCorrect: boolean }>`
     padding: 1.5rem;
     margin-bottom: 1rem;
@@ -150,6 +263,30 @@ export const ReviewScreen: React.FC<Props> = ({
     onRestart,
 }) => {
     const percentage = Math.round((score / totalQuestions) * 100);
+    const incorrectAnswers = totalQuestions - score;
+
+    const getPerformanceRating = (pct: number): string => {
+        if (pct >= 90) return 'Excellent';
+        if (pct >= 70) return 'Good';
+        if (pct >= 50) return 'Fair';
+        return 'Needs Improvement';
+    };
+
+    const getRatingColor = (rating: string): string => {
+        switch (rating) {
+            case 'Excellent':
+                return '#10b981';
+            case 'Good':
+                return '#3b82f6';
+            case 'Fair':
+                return '#fbbf24';
+            default:
+                return '#ef4444';
+        }
+    };
+
+    const performanceRating = getPerformanceRating(percentage);
+    const ratingColor = getRatingColor(performanceRating);
 
     return (
         <Wrapper role="region" aria-label="Quiz review">
@@ -157,6 +294,39 @@ export const ReviewScreen: React.FC<Props> = ({
             <ScoreSummary>
                 You scored {score} out of {totalQuestions} ({percentage}%)
             </ScoreSummary>
+
+            <EvaluationPanel>
+                <EvaluationTitle>Full Evaluation Score</EvaluationTitle>
+
+                <StatsGrid>
+                    <StatCard>
+                        <StatValue $color="#10b981">{score}</StatValue>
+                        <StatLabel>Correct Answers</StatLabel>
+                    </StatCard>
+
+                    <StatCard>
+                        <StatValue $color="#ef4444">{incorrectAnswers}</StatValue>
+                        <StatLabel>Incorrect Answers</StatLabel>
+                    </StatCard>
+
+                    <StatCard>
+                        <StatValue $color="#00d4ff">{percentage}%</StatValue>
+                        <StatLabel>Accuracy Rate</StatLabel>
+                    </StatCard>
+
+                    <StatCard>
+                        <StatValue $color="#a78bfa">{totalQuestions}</StatValue>
+                        <StatLabel>Total Questions</StatLabel>
+                    </StatCard>
+                </StatsGrid>
+
+                <PerformanceRating $rating={performanceRating}>
+                    <RatingLabel>Performance Rating</RatingLabel>
+                    <RatingValue $color={ratingColor}>{performanceRating}</RatingValue>
+                </PerformanceRating>
+            </EvaluationPanel>
+
+            <ReviewTitle>Detailed Answer Review</ReviewTitle>
 
             {userAnswers.map((answer, index) => (
                 <QuestionItem
